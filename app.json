@@ -1,0 +1,54 @@
+{
+  "expo": {
+    "name": "KAL&ROK",
+    "slug": "KAL-ROK-GmbH",
+    "version": "22",
+    "orientation": "portrait",
+    "icon": "./assets/imgs/icon1.png",
+    "splash": {
+      "image": "./assets/imgs/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "notification": {
+      "icon": "./assets/imgs/icon1.png",
+      "color": "#ffffff"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "kalrok.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "We needs camera permissions to allow you to upload profile photos or send photos in support chat.",
+        "NSPhotoLibraryAddUsageDescription": "We needs photo library permissions to allow you to upload profile images or send photos in support chat.",
+        "NSPhotoLibraryUsageDescription": "We needs photo library permissions to allow you to upload profile images or send photos in support chat.",
+        "NSMicrophoneUsageDescription": "we need microphone permissions to allow you to send audios in support chat."
+      }
+    },
+    "android": {
+      "permissions": [
+        "CAMERA",
+        "WRITE_EXTERNAL_STORAGE",
+        "CAMERA_ROLL",
+        "AUDIO"
+      ],
+      "versionCode": 22,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/imgs/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "kalrok.app"
+    },
+    "web": {
+      "favicon": "./assets/imgs/favlogo.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "242780be-deaa-4f82-955b-d6823bcfc8b9"
+      }
+    }
+  }
+}

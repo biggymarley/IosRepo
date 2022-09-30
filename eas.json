@@ -1,0 +1,47 @@
+{
+  "cli": {
+    "version": ">= 2.1.0",
+    "promptToConfigurePushNotifications": false
+  },
+  "build": {
+    "development": {
+      "distribution": "internal",
+      "android": {
+        "gradleCommand": ":app:assembleDebug"
+      },
+      "ios": {
+        "buildConfiguration": "Debug"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "devclient": {
+      "releaseChannel": "default",
+      "distribution": "internal",
+      "developmentClient": true,
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "simulator": true
+      }
+    },
+    "production": {}
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "appleId": "info@Kal-rok.de",
+        "ascAppId": "1645721448",
+        "appleTeamId": "V2Z6S6U496"
+      },
+      "android": {
+        "serviceAccountKeyPath": "../pc-api-6865884239781188207-359-981553f217d3.json"
+      }
+    }
+  }
+}
