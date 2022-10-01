@@ -115,9 +115,9 @@ export default function LiveChat({ navigation }) {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "height" : ""}
+      behavior={Platform.OS === "ios" ? "padding" : ""}
       style={{ flex: 1 }}
-      keyboardVerticalOffset={25}
+      keyboardVerticalOffset={30}
     >
       {showCam.isPreview && formik.values.photo !== "" && (
         <Preview Context={ChatContext} />

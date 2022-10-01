@@ -207,7 +207,7 @@ export default function ChatStack() {
       await Audio.requestPermissionsAsync();
       await Audio.setAudioModeAsync({
         allowsRecordingIOS: true,
-        // playsInSilentModeIOS: true,
+         playsInSilentModeIOS: true,
       });
       //console.log("Starting recording..");
       const { recording } = await Audio.Recording.createAsync(
