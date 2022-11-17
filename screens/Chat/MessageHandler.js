@@ -1,16 +1,22 @@
 import { Video } from "expo-av";
 import * as Linking from "expo-linking";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { windowWidth } from "../../assets/colors";
 import {
   gifchat,
   gifchat2,
   gifchat3,
-  gifchat4, pdf
+  gifchat4,
+  gifchat5,
+  gifchat6,
+  gifchat7,
+  gifchat8,
+  pdf,
 } from "../../assets/IconFactory";
 import { BaseURL, GetFileUrl } from "../../tools/Apis";
 import AudioPlayer from "./AudioPlayer";
+import axios, { FaqsUrl } from "../../tools/Apis";
 const Types = {
   image: "image",
   text: "text",
@@ -21,19 +27,50 @@ const Types = {
   link: "link",
 };
 export default function MessageHandler({ message }) {
+  const [file, setFile] = useState(null);
   const ref = useRef(null);
   const checkIfFinished = async (status) => {
-    if (
-      ref?.current &&
-      status.positionMillis !== 0 &&
-      status.playableDurationMillis === status.positionMillis &&
-      !status.isPlaying
-    ) {
-      await ref.current.setPositionAsync(0);
-      await ref.current.pauseAsync();
-    }
+    try {
+      if (
+        ref?.current &&
+        status.positionMillis !== 0 &&
+        status.playableDurationMillis === status.positionMillis &&
+        !status.isPlaying
+      ) {
+        await ref.current.setPositionAsync(0);
+        await ref.current.pauseAsync();
+      }
+    } catch (error) {}
   };
 
+  // const getfile = async () => {
+  //   try {
+  //     const check = await axios.get(
+  //       `${BaseURL}${GetFileUrl}/${message.message.content}`
+  //     );
+  //     console.log(check.data);
+  //     setFile(check.data);
+  //   } catch (error) {
+  //     setFile(null);
+  //     console.error(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (
+  //     message.message.type === Types.video ||
+  //     message.message.type === Types.audio ||
+  //     message.message.type === Types.image
+  //   )
+  //     getfile();
+  // }, [message]);
+  // if (
+  //   (message.message.type === Types.video ||
+  //     message.message.type === Types.audio ||
+  //     message.message.type === Types.image) &&
+  //   !file
+  // )
+  //   return null;
   switch (message.message.type) {
     case Types.image:
       return (
@@ -73,11 +110,16 @@ export default function MessageHandler({ message }) {
               )
             }
           >
-            <Image
-              source={pdf}
-              resizeMode="contain"
-              style={{ width: 100, height: 100 }}
-            />
+            <View style={{ flexDirection: "column", alignItems: "center" }}>
+              <Image
+                source={pdf}
+                resizeMode="contain"
+                style={{ width: 50, height: 50, marginBottom: 10 }}
+              />
+              <Text>
+                {message?.message?.content?.split(".pdf")?.[0] ?? "Pdf"}
+              </Text>
+            </View>
           </TouchableOpacity>
         </View>
       );
@@ -85,7 +127,9 @@ export default function MessageHandler({ message }) {
       return (
         <View style={{ minWidth: windowWidth / 2 }}>
           <AudioPlayer
-            uri={{ uri: `${BaseURL}${GetFileUrl}/${message.message.content}` }}
+            uri={{
+              uri: `${BaseURL}${GetFileUrl}/${message.message.content}`,
+            }}
             noSend={true}
           />
         </View>
@@ -93,7 +137,7 @@ export default function MessageHandler({ message }) {
     case Types.video:
       return (
         <View>
-          <Video
+          {/* <Video
             source={{
               uri: `${BaseURL}${GetFileUrl}/${message.message.content}`,
             }}
@@ -104,7 +148,7 @@ export default function MessageHandler({ message }) {
             useNativeControls={true}
             ref={ref}
             onPlaybackStatusUpdate={(status) => checkIfFinished(status)}
-          />
+          /> */}
         </View>
       );
     case Types.link: {
@@ -146,5 +190,21 @@ const gifs = [
   {
     src: gifchat4,
     name: "4",
+  },
+  {
+    src: gifchat5,
+    name: "5",
+  },
+  {
+    src: gifchat6,
+    name: "6",
+  },
+  {
+    src: gifchat7,
+    name: "7",
+  },
+  {
+    src: gifchat8,
+    name: "8",
   },
 ];

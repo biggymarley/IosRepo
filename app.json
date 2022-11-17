@@ -2,7 +2,7 @@
   "expo": {
     "name": "KAL&ROK",
     "slug": "KAL-ROK-GmbH",
-    "version": "22",
+    "version": "33",
     "orientation": "portrait",
     "icon": "./assets/imgs/icon1.png",
     "splash": {
@@ -11,7 +11,8 @@
       "backgroundColor": "#FFFFFF"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/242780be-deaa-4f82-955b-d6823bcfc8b9"
     },
     "notification": {
       "icon": "./assets/imgs/icon1.png",
@@ -28,6 +29,14 @@
         "NSMicrophoneUsageDescription": "we need microphone permissions to allow you to send audios in support chat."
       }
     },
+    "plugins": [
+      [
+        "expo-document-picker",
+        {
+          "appleTeamId": "V2Z6S6U496"
+        }
+      ]
+    ],
     "android": {
       "permissions": [
         "CAMERA",
@@ -35,7 +44,7 @@
         "CAMERA_ROLL",
         "AUDIO"
       ],
-      "versionCode": 22,
+      "versionCode": 33,
       "adaptiveIcon": {
         "foregroundImage": "./assets/imgs/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
@@ -49,6 +58,9 @@
       "eas": {
         "projectId": "242780be-deaa-4f82-955b-d6823bcfc8b9"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }

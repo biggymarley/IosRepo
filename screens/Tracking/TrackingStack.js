@@ -8,10 +8,11 @@ import {
   step4Png,
   step5Png,
   step6Png,
-  step7Png
+  step7Png,
 } from "../../assets/IconFactory";
 import axios, { MyCommandUrl } from "../../tools/Apis";
 import { TrackingProvider, UserContext } from "../../tools/Context";
+import FromMa from "./FromMa";
 import GetStarted from "./GetStarted";
 import NoTrack from "./NoTrack";
 import OneStep from "./OneStep";
@@ -34,13 +35,10 @@ export default function TrackingStack({ navigation }) {
         },
       });
       const command = res.data.data.filter((e) => e.history === false)[0] ?? {};
-      // const history = res.data.data.filter((e) => e.history === true) ?? [];
-      // setHistory([...history]);
       setstatus({ ...command });
       setisLoading(false);
     } catch (error) {
       setisLoading(false);
-      ;
     }
   };
 
@@ -70,6 +68,13 @@ export default function TrackingStack({ navigation }) {
         <Stack.Screen
           name="NoTrack"
           component={NoTrack}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="FromMa"
+          component={FromMa}
           options={{
             headerShown: false,
           }}

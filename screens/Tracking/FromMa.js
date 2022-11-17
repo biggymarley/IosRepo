@@ -2,10 +2,10 @@ import LottieView from "lottie-react-native";
 import React, { useEffect, useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import { colors, windowWidth } from "../../assets/colors";
-import { locationLoading } from "../../assets/IconFactory";
+import { fromMaAnim } from "../../assets/IconFactory";
 import MenuButton from "../../tools/MenuButton";
 
-export default function NoTrack({ navigation }) {
+export default function FromMa({ navigation }) {
   const ref = useRef();
 
   useEffect(() => {
@@ -21,13 +21,14 @@ export default function NoTrack({ navigation }) {
         title="Sendungsverfolgung"
         isRight={true}
       />
-      <View style={{ flex: 1, padding: 15 }}>
+      <View style={{ flex: 1 }}>
         <LottieView
-          source={locationLoading}
+          source={fromMaAnim}
           autoPlay
           loop
+          style={{transform:[{scale: .95}]}}
           ref={ref}
-          speed={1.5}
+          speed={1}
         />
       </View>
     </>

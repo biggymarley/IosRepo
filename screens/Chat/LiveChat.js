@@ -24,6 +24,7 @@ import {
   gifchat2,
   gifchat4,
   notFound,
+  micAnim,
 } from "../../assets/IconFactory";
 import axios, {
   BaseURL,
@@ -87,37 +88,12 @@ export default function LiveChat({ navigation }) {
       fetchMessages();
     }, [userData])
   );
-  // socket?.on("newMessage", (data) => {
-  //   if(Livechat)
-  //   setLivechat({
-  //     ...Livechat,
-  //     message: [...Livechat.message, data.message],
-  //   });
-  // });
-  // const [socket, setSocket] = useState(null);
-  // // const [sdata, setsdata] = useState("null");
-  // useEffect(() => {
-  //   const Basesocket = io(BaseURL);
-  //   //console.log(userData);
-  //   Basesocket.on("UsersId", (data) => {
-  //     // setsdata(data);
-  //     //console.log(data);
-  //     Basesocket.emit("userdata", [userData._id, "user"]);
-  //   });
-  //   setSocket(Basesocket);
-  //   return () => disconnectSocket();
-  // }, [setSocket]);
-
-  // const disconnectSocket = () => {
-  //   socket.emit("forceDisconnect", userData._id);
-  //   socket.close();
-  // };
 
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : ""}
       style={{ flex: 1 }}
-      keyboardVerticalOffset={30}
+      keyboardVerticalOffset={40}
     >
       {showCam.isPreview && formik.values.photo !== "" && (
         <Preview Context={ChatContext} />
@@ -208,25 +184,21 @@ const GifModal = () => {
 const Messages = () => {
   const { messagesData } = useContext(ChatContext);
 
-  return messagesData.map(
-    (message, index) =>
-      message.message ? <SidesHandler message={message} key={index} /> : null
-    // <MessageHandler message={message} key={index}/>
+  return messagesData.map((message, index) =>
+    message.message ? <SidesHandler message={message} key={index} /> : null
   );
 };
 
 const SidesHandler = ({ message }) => {
-  const { convertaionInfos } = useContext(ChatContext);
   const { userData } = useContext(UserContext);
 
   if (message.senderId !== userData?._id) return <LeftSide message={message} />;
   else return <RightSide message={message} />;
 };
 
+const url = `${BaseURL}${GetFileUrl}/`;
 const RightSide = ({ message }) => {
-  const { messagesData } = useContext(ChatContext);
   const { userData } = useContext(UserContext);
-  const url = `${BaseURL}${GetFileUrl}/`;
   moment.locale("de");
   return (
     <>
@@ -315,6 +287,7 @@ const LeftSide = ({ message }) => {
 
 const SendInput = () => {
   const [text, settext] = useState("");
+  const [open, setOpen] = useState(false);
   const {
     recording,
     startRecording,
@@ -340,76 +313,153 @@ const SendInput = () => {
         <AudioPlayer uri={audioUri} sendAudioMessage={sendAudioMessage} />
       ) : (
         <>
-          <TextInput
-            style={{ marginLeft: 50 }}
-            placeholder="Nachricht schicken"
-            value={text}
-            onChangeText={(text) => settext(text)}
-            theme={theme}
-            mode="outlined"
-            keyboardType="default"
-            activeOutlineColor={colors.primary}
-            outlineColor="rgba(0,0,0,0.2)"
-            selectionColor={colors.primary}
-            right={
-              text !== "" && !recording ? (
-                <TextInput.Icon
-                  name="send"
-                  color={colors.primary}
-                  size={20}
-                  onPress={sending}
-                />
-              ) : recording ? (
-                <TextInput.Icon
-                  forceTextInputFocus={false}
-                  onPress={stopRecording}
-                  name="microphone-off"
-                  color={colors.primary}
-                  size={24}
-                />
-              ) : (
-                <TextInput.Icon
-                  forceTextInputFocus={false}
-                  onPress={recording === undefined ? startRecording : null}
-                  // disabled={recording !== undefined}
-                  name="microphone"
-                  color={colors.primary}
-                  size={24}
-                />
-              )
-            }
-          />
+          <View style={{ position: "relative" }}>
+            <TextInput
+              style={{ marginLeft: 50 }}
+              placeholder="Nachricht schicken"
+              value={text}
+              onChangeText={(text) => settext(text)}
+              theme={theme}
+              mode="outlined"
+              keyboardType="default"
+              activeOutlineColor={colors.primary}
+              outlineColor="rgba(0,0,0,0.2)"
+              selectionColor={colors.primary}
+              right={
+                text !== "" && !recording ? (
+                  <TextInput.Icon
+                    name="send"
+                    color={colors.primary}
+                    size={20}
+                    onPress={sending}
+                  />
+                ) : null
+              }
+            />
+          </View>
           <FabButton />
+          <AudioIcons text={text} open={open} setOpen={setOpen} />
         </>
       )}
     </View>
   );
 };
 
+const AudioIcons = ({ text, open, setOpen }) => {
+  const { recording, startRecording, stopRecording } =
+    React.useContext(ChatContext);
+  const ref = useRef();
+  const HandelRecording = () => {
+    if (recording) {
+      stopRecording();
+      setOpen(false);
+      ref?.current?.pause();
+    } else {
+      startRecording();
+      ref?.current?.play();
+    }
+  };
+
+  const HandleClose = () => {
+    if (recording) {
+      stopRecording();
+    }
+    setOpen(false);
+  };
+  return text === "" ? (
+    <>
+      <TouchableOpacity
+        onPress={() => setOpen(true)}
+        style={{
+          width: 75,
+          height: 75,
+          position: "absolute",
+          right: 15,
+          bottom: 6,
+          zIndex: 999,
+        }}
+      >
+        <LottieView
+          source={micAnim}
+          // autoPlay={true}
+          loop={true}
+          speed={2}
+          resizeMode="contain"
+        />
+      </TouchableOpacity>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={open}
+        onRequestClose={HandleClose}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text
+              style={{
+                fontFamily: "Manrope_700Bold",
+                color: colors.primary,
+                fontSize: 15,
+                textAlign: "center",
+              }}
+            >
+              {recording ? "Aufnahmen" : "Sprachnachricht aufnehmen"}
+            </Text>
+            <TouchableOpacity
+              onPress={HandelRecording}
+              style={{
+                width: 150,
+                height: 150,
+                zIndex: 999,
+              }}
+            >
+              <LottieView
+                source={micAnim}
+                loop={true}
+                speed={2}
+                resizeMode="contain"
+                ref={ref}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.callContainer}
+              onPress={HandleClose}
+            >
+              <Text style={styles.callText}>Sprachnachricht löschen</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+    </>
+  ) : null;
+};
+
 const FabButton = () => {
   const [open, setState] = React.useState(false);
   const { setshowCam, showCam, pickImageLibrary } = useContext(ChatContext);
   const checkForCameraRollPermission = async () => {
-    await ImagePicker.requestMediaLibraryPermissionsAsync();
-    const { status } = await ImagePicker.getMediaLibraryPermissionsAsync();
-    if (status !== "granted") {
-      Alert.alert(
-        "Berechtigungen",
-        "Bitte erteilen Sie in den Einstellungen Ihres Systems Kamerarollenberechtigungen"
-      );
-    } else {
-      //console.log("Media Permissions are granted");
-    }
-    await ImagePicker.requestCameraPermissionsAsync();
-    const res = await ImagePicker.getCameraPermissionsAsync();
-    if (res.status !== "granted") {
-      Alert.alert(
-        "Berechtigungen",
-        "Bitte erteilen Sie in den Einstellungen Ihres Systems Kamerarollenberechtigungen"
-      );
-    } else {
-      //console.log("Media Permissions are granted");
-    }
+    try {
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+      const { status } = await ImagePicker.getMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert(
+          "Berechtigungen",
+          "Bitte erteilen Sie in den Einstellungen Ihres Systems Kamerarollenberechtigungen"
+        );
+      } else {
+        //console.log("Media Permissions are granted");
+      }
+      await ImagePicker.requestCameraPermissionsAsync();
+      const res = await ImagePicker.getCameraPermissionsAsync();
+      if (res.status !== "granted") {
+        Alert.alert(
+          "Berechtigungen",
+          "Bitte erteilen Sie in den Einstellungen Ihres Systems Kamerarollenberechtigungen"
+        );
+      } else {
+        //console.log("Media Permissions are granted");
+      }
+    } catch (error) {}
   };
 
   React.useEffect(() => {
@@ -503,6 +553,60 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     overflow: "hidden",
     zIndex: 12,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 2,
+    backgroundColor: "#0000004a",
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 12,
+    padding: 15,
+    // width: "60%",
+    // height: "40%",
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  callContainer: {
+    width: "80%",
+    // marginVertical: 20,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    // margin: 10,
+    backgroundColor: colors.primary,
+    borderWidth: 2,
+    borderColor: colors.primary,
+    height: 50,
+    paddingHorizontal: 15,
+    borderRadius: 12,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 2,
+    // marginTop: windowHeight * 0.2,
+  },
+  callText: {
+    fontFamily: "Manrope_700Bold",
+    color: colors.bg,
+    fontSize: 15,
+    textAlign: "center",
   },
 });
 

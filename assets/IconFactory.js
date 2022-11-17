@@ -36,6 +36,10 @@ export const gifchat = require("./imgs/gifs/gifchat.gif");
 export const gifchat2 = require("./imgs/gifs/gifchat2.gif");
 export const gifchat3 = require("./imgs/gifs/gifchat3.gif");
 export const gifchat4 = require("./imgs/gifs/gifchat4.gif");
+export const gifchat5 = require("./imgs/gifs/gifchat5.gif");
+export const gifchat6 = require("./imgs/gifs/gifchat6.gif");
+export const gifchat7 = require("./imgs/gifs/gifchat7.gif");
+export const gifchat8 = require("./imgs/gifs/gifchat8.gif");
 
 //Buttons
 export const ToDuButton = require("./imgs/Buttons/ToDuButton.png");
@@ -127,6 +131,10 @@ export const AppointmentAnimDu = require("./animations/AppointmentAnimDu.json");
 export const carAnim = require("./animations/carAnim.json");
 export const phoneAnim = require("./animations/Phone.json");
 export const star = require("./animations/star.json");
+export const fromMaAnim = require("./animations/FromMa.json");
+export const TourInfoAnim = require("./animations/TourInfoAnim.json");
+export const micAnim = require("./animations/micAnim.json");
+export const rightArrow = require("./animations/rightArrow.json");
 
 //steps
 export const step1Png = require("./imgs/steps/step1.png");

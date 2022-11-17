@@ -7,11 +7,16 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { colors, windowWidth } from "../../assets/colors";
-import { bell, EmptyButtonBg, noTour, nurem } from "../../assets/IconFactory";
+import {
+  bell,
+  EmptyButtonBg,
+  TourInfoAnim,
+  rightArrow,
+} from "../../assets/IconFactory";
 import { HomeTourContext } from "../../tools/Context";
 
 export default function TourInfos({ navigation }) {
@@ -48,7 +53,7 @@ const TourHandler = ({ indocator }) => {
     case 1:
       return <SubscribeToCity />;
     default:
-      return <Text>Loading</Text>;
+      return <SubscribeToTour />;
   }
 };
 
@@ -81,7 +86,7 @@ const SubscribeToCity = () => {
               resizeMode="contain"
             />
           </View>
-          <View style={{ flexGrow: 1 }}>
+          <View style={{ flexGrow: .6 }}>
             {TourData.Tname === "Nürnberg & Peripherie" ? (
               <>
                 <Text style={styles.statusTour} numberOfLines={9}>
@@ -101,9 +106,7 @@ const SubscribeToCity = () => {
                         borderRadius: 5,
                       }}
                     />
-                    <Text style={styles.statusTour}>
-                      Weiter zur Anmeldung {">"}
-                    </Text>
+                    <Text style={styles.statusTour}>Weiter zur Anmeldung</Text>
                   </>
                 ) : null}
               </>
@@ -126,20 +129,25 @@ const SubscribeToCity = () => {
                         borderRadius: 5,
                       }}
                     />
-                    <Text style={styles.statusTour}>
-                      Weiter zur Anmeldung {">"}
-                    </Text>
+                    <Text style={styles.statusTour}>Weiter zur Anmeldung</Text>
                   </>
                 ) : null}
               </>
             )}
+
+        
           </View>
+          <View style={{ width: 35, height: 35,  flexGrow: .4 }}>
+              <LottieView
+                loop={true}
+                autoPlay={true}
+                source={rightArrow}
+                speed={0.8}
+                resizeMode="contain"
+              />
+            </View>
         </View>
-        {/* {TourData.status === true && userData.cityId === null
-              ? "Tour is active click to subscribe to city"
-              : TourData.status === true
-              ? "Tour is active click to see more details"
-            : "Tour is Not active click to see more details"} */}
+
         {userData.cityId && TourData.cities?.length > 0 && (
           <View style={styles.subCont}>
             <Text style={styles.subcity}>
@@ -173,7 +181,6 @@ const SubscribeToTour = () => {
       style={{
         ...styles.tourCard,
         borderRadius: 10,
-        // backgroundColor: colors.primaryTrans,
         flexDirection: "row",
         alignItems: "center",
         position: "relative",
@@ -186,13 +193,10 @@ const SubscribeToTour = () => {
         activeOpacity={0.6}
         style={{
           flexGrow: 50,
-          // backgroundColor: "red",
           height: "100%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          borderRightWidth: 2,
-          borderColor: colors.primary,
         }}
         onPress={() =>
           navigation.navigate("KAL&ROK on Tour", {
@@ -202,53 +206,12 @@ const SubscribeToTour = () => {
       >
         <View style={styles.cont}>
           <LottieView
-            loop={false}
+            loop={true}
             autoPlay
-            source={noTour}
+            source={TourInfoAnim}
             speed={0.3}
             style={{ marginTop: 15 }}
             resizeMode="contain"
-          />
-        </View>
-        <View
-          style={{ ...styles.subtocity, marginBottom: windowWidth * 0.095 }}
-        >
-          <Text style={{ ...styles.city, color: colors.primary }}>
-            Tour Costumer
-          </Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{
-          flexGrow: 1,
-          // backgroundColor: "red",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-        activeOpacity={0.6}
-        onPress={() =>
-          navigation.navigate("KAL&ROK on Tour", {
-            screen: "SubscribeToNurm",
-          })
-        }
-      >
-        <View
-          style={{ ...styles.subtocity, marginBottom: windowWidth * 0.095 }}
-        >
-          <Text
-            style={{ ...styles.city, color: colors.primary }}
-            numberOfLines={20}
-          >
-            Nürnberg & Peripherie
-          </Text>
-        </View>
-        <View style={styles.cont}>
-          <Image
-            source={nurem}
-            resizeMode="contain"
-            style={{ width: "100%", height: "100%" }}
           />
         </View>
       </TouchableOpacity>

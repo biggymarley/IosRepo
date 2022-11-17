@@ -11,7 +11,8 @@ export default function GetStarted({ navigation }) {
   const { status } = useContext(TrackingContext);
 
   const Navigate = () => {
-    if (status?.finish === false) navigation.navigate("SingleStep");
+    if (status?.tripGroup === "B") navigation.navigate("FromMa");
+    else if (status?.finish === false) navigation.navigate("SingleStep");
     else navigation.navigate("NoTrack");
   };
 
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_300Light",
     color: colors.text,
     lineHeight: 25,
-    fontSize: windowWidth * .040,
+    fontSize: windowWidth * 0.04,
     marginBottom: 15,
   },
   next: {
