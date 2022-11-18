@@ -33,10 +33,12 @@ import {
   AppState,
   Modal,
   Pressable,
-  StatusBar,
   StyleSheet,
+  StatusBar,
   Text,
   View,
+  NativeModules,
+  Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { io } from "socket.io-client";
@@ -50,7 +52,7 @@ import Loading from "./tools/Loading";
 // import { createNavigationContainerRef } from '@react-navigation/native';
 const Drawer = createDrawerNavigator();
 const navigationRef = createNavigationContainerRef();
-
+const {StatusBarManager} = NativeModules
 export default function App() {
   let [fontsLoaded] = useFonts({
     Inter_100Thin,
@@ -72,6 +74,7 @@ export default function App() {
   });
   const [screensData, setscreensData] = useState([...NotLoggedScreens]);
   const [isLoading, setisLoading] = useState(true);
+  const [SHeight, setSheight] = useState();
   const [messagesData, setmessagesData] = useState([]);
   const [NeedPwd, setNeedPwd] = useState(false);
   const [NewMessage, setNewMessage] = useState(false);
@@ -349,6 +352,21 @@ export default function App() {
     }
   };
 
+
+  useEffect(() => {
+  const fetch = async() => {
+    try {
+      await StatusBarManager.getHeight((height) => {
+         setSheight(height.height)
+      })
+    } catch (error) {
+      
+    }
+  }   
+  fetch()
+  },[])
+  
+
   if (!fontsLoaded) return <Loading />;
   return (
     <>
@@ -384,9 +402,9 @@ export default function App() {
         >
           <StatusBar
             barStyle="dark-content"
-            backgroundColor={"transparent"}
             hidden={false}
           />
+          <SafeAreaView style={{ flex: 1, marginTop:Platform.OS ? SHeight : 0 }}>
           <NavigationContainer theme={NavTheme} ref={navigationRef}>
             <Drawer.Navigator
               drawerContent={(props) => <CostumDrawer {...props} />}
@@ -410,14 +428,15 @@ export default function App() {
                     drawerInActiveTintColor: "rgba(255, 255, 255, 1)",
                     ...screen.options,
                   }}
-                />
-              ))}
+                  />
+                  ))}
             </Drawer.Navigator>
             <AccountDeleted
               modalVisible={modalVisible}
               setModalVisible={setAccountDeletedModal}
-            />
+              />
           </NavigationContainer>
+              </SafeAreaView>
         </UserProvider>
       </SafeAreaView>
     </>
