@@ -211,7 +211,7 @@ export default function ChatStack() {
       });
       //console.log("Starting recording..");
       const { recording } = await Audio.Recording.createAsync(
-        Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
+        Audio.RecordingOptionsPresets.HIGH_QUALITY
       );
       setRecording(recording);
       //console.log("Recording started");

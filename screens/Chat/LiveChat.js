@@ -498,7 +498,7 @@ const FabButton = () => {
           color: colors.primary,
         },
         {
-          icon: "gif",
+          icon: "file-gif-box",
           onPress: () => setshowCam({ ...showCam, isGif: true }),
           small: false,
           color: colors.primary,

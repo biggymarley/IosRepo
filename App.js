@@ -48,7 +48,6 @@ import { UserProvider } from "./tools/Context";
 import CostumDrawer from "./tools/CostumDrawer";
 import Loading from "./tools/Loading";
 // import { createNavigationContainerRef } from '@react-navigation/native';
-
 const Drawer = createDrawerNavigator();
 const navigationRef = createNavigationContainerRef();
 

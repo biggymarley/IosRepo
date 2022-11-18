@@ -27,7 +27,7 @@ export default function GetStarted({ navigation }) {
           style={{ width: "80%", height: windowWidth * 0.8, marginTop: "auto" }}
         />
         <View style={{ display: "flex", alignItems: "center" }}>
-          <Text style={styles.desc} numberOfLines={15} adjustsFontSizeToFit>
+          <Text style={styles.desc} >
             Als registrierter Kunde profitieren Sie von allen Vorteilen unserer
             App, unter anderem die Möglichkeit bequem von ihrem Smartphone aus
             ihre Sendungen und Pakete auf ihrem Weg nach Marokko zu verfolgen.{" "}
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_300Light",
     color: colors.text,
     lineHeight: 25,
-    fontSize: windowWidth * 0.04,
+    fontSize: 16,
     marginBottom: 15,
   },
   next: {

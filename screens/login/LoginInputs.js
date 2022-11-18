@@ -9,7 +9,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { ActivityIndicator, IconButton, TextInput } from "react-native-paper";
@@ -38,9 +38,7 @@ const LoginInputs = ({
   const [visible, setvisible] = useState(false);
   const [loading, setloading] = useState(false);
   const ref = useRef({});
-
-  useEffect(() => {
-    const log = async () => {
+  const log = async () => {
     try {
       const value = await AsyncStorage.getItem("SavedData");
       //console.log(value);
@@ -48,15 +46,15 @@ const LoginInputs = ({
       if (res !== null) {
         setPhone(res.phone);
         setpwd(res.password);
-        return true
+        return true;
       }
     } catch (error) {
-      return false
+      return false;
     }
-  }
-  const res = log();
-  return res;
-}, []);
+  };
+  useEffect(() => {
+    log();
+  }, []);
 
   const Login = async () => {
     const res = await Auth(phone, pwd, setloading, HandleClose, saveData);
@@ -213,42 +211,42 @@ const LoginInputs = ({
                   </TouchableOpacity>
                 </View>
               </ScrollView>
-                <View >
-                  <TouchableOpacity
-                    style={[styles.button, styles.buttonClose]}
-                    onPress={Login}
-                    disabled={loading}
+              <View>
+                <TouchableOpacity
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={Login}
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <ActivityIndicator size={28} color={colors.bg} />
+                  ) : (
+                    <Text style={styles.textStyle}>Anmelden</Text>
+                  )}
+                </TouchableOpacity>
+                <TouchableOpacity onPress={GotoRegister}>
+                  <Text
+                    style={{
+                      ...styles.regtext,
+                      color: "black",
+                      textAlign: "center",
+                      marginBottom: 5,
+                    }}
                   >
-                    {loading ? (
-                      <ActivityIndicator size={28} color={colors.bg} />
-                    ) : (
-                      <Text style={styles.textStyle}>Anmelden</Text>
-                    )}
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={GotoRegister}>
+                    Sie haben noch keinen Account?
                     <Text
                       style={{
-                        ...styles.regtext,
-                        color: "black",
-                        textAlign: "center",
-                        marginBottom: 5,
+                        color: colors.text,
+                        fontFamily: "Manrope_700Bold",
+                        textTransform: "uppercase",
+                        fontSize: 14,
                       }}
                     >
-                      Sie haben noch keinen Account? 
-                      <Text
-                        style={{
-                          color: colors.text,
-                          fontFamily: "Manrope_700Bold",
-                          textTransform: "uppercase",
-                          fontSize: 14,
-                        }}
-                      >
-                        {" "}
-                        Hier registrieren
-                      </Text>
+                      {" "}
+                      Hier registrieren
                     </Text>
-                  </TouchableOpacity>
-                </View>
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </KeyboardAvoidingView>
