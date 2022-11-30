@@ -1,7 +1,7 @@
 import LottieView from "lottie-react-native";
 import React, { useEffect, useRef } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
-import { colors } from "../../assets/colors";
+import { colors, windowHeight, windowWidth } from "../../assets/colors";
 import { du, m2, tap, tomaAp, toduAp } from "../../assets/IconFactory";
 import MenuButton from "../../tools/MenuButton";
 
@@ -38,8 +38,7 @@ export default function Appointments({ navigation }) {
             style={{
               position: "relative",
               left: "-5%",
-              width: "99%",
-              height: "99%",
+              height:  windowHeight * .8,
             }}
             ref={ref2}
           />
@@ -56,9 +55,8 @@ export default function Appointments({ navigation }) {
             resizeMode="contain"
             style={{
               position: "relative",
-              right: "6%",
-              width: "95%",
-              height: "95%",
+              right:'3%',
+              height:  windowHeight * .70,
             }}
             ref={ref}
           />
@@ -80,7 +78,8 @@ const styles = StyleSheet.create({
     borderRightColor: colors.primary,
     position: "relative",
     flex: 1,
-  },
+    justifyContent:'center',
+     },
   country: {
     width: "100%",
     height: "100%",
