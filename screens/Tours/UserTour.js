@@ -48,7 +48,7 @@ export default function UserTour({ navigation }) {
               // alignItems: "center",
               paddingTop: 6,
 
-              flexDirection: "column",
+              flexDirection: "row",
             }}
           >
             <Text style={[styles.statustext, { paddingBottom: 5 }]}>
@@ -56,7 +56,7 @@ export default function UserTour({ navigation }) {
             </Text>
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.date}>
-                {moment(TourData.startDate).format("DD/MM/YYYY")} {" ->"}
+                {moment(TourData.startDate).format("DD/MM")} {" ->"}
               </Text>
               <Text style={styles.date}>
                 {"  " + moment(TourData.endDate).format("DD/MM/YYYY")}
@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
   statustext: {
     fontFamily: "Manrope_700Bold",
     fontSize: 15,
-    marginRight: 20,
+    marginRight: 8,
 
     // textTransform: "uppercase",
     color: colors.text,

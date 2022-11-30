@@ -2,9 +2,7 @@ import LottieView from "lottie-react-native";
 import React, { useEffect, useRef } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { colors } from "../../assets/colors";
-import {
-  du, m2, tap
-} from "../../assets/IconFactory";
+import { du, m2, tap, tomaAp, toduAp } from "../../assets/IconFactory";
 import MenuButton from "../../tools/MenuButton";
 
 export default function Appointments({ navigation }) {
@@ -31,23 +29,17 @@ export default function Appointments({ navigation }) {
           style={styles.touch}
           onPress={() => navigation.navigate("ApToMa")}
         >
-          <Image
-            source={m2}
-            resizeMode="contain"
-            style={{ width: "100%", height: "100%" }}
-          />
           <LottieView
-            source={tap}
+            source={tomaAp}
             speed={1}
             autoPlay={true}
             loop={true}
             resizeMode="contain"
             style={{
-              position: "absolute",
-              width: 130,
-              height: 130,
-              top: "30%",
-              right: "10%",
+              position: "relative",
+              left: "-5%",
+              width: "99%",
+              height: "99%",
             }}
             ref={ref2}
           />
@@ -56,23 +48,17 @@ export default function Appointments({ navigation }) {
           style={{ ...styles.touch, borderRightWidth: 0 }}
           onPress={() => navigation.navigate("ApToDu")}
         >
-            <Image
-            source={du}
-            resizeMode="contain"
-            style={{ width: "100%", height: "100%" , position:"relative", top:-20}}
-          />
-           <LottieView
-            source={tap}
+          <LottieView
+            source={toduAp}
             speed={1}
             autoPlay={true}
             loop={true}
             resizeMode="contain"
             style={{
-              position: "absolute",
-              width: 130,
-              height: 130,
-              top: "30%",
-              right: "10%",
+              position: "relative",
+              right: "6%",
+              width: "95%",
+              height: "95%",
             }}
             ref={ref}
           />
@@ -89,10 +75,11 @@ const styles = StyleSheet.create({
   },
   touch: {
     flexBasis: "50%",
-    width: "100%",
+    // width: "100%",
     borderRightWidth: 2,
     borderRightColor: colors.primary,
     position: "relative",
+    flex: 1,
   },
   country: {
     width: "100%",

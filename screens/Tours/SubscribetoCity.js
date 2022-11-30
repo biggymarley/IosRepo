@@ -111,7 +111,7 @@ export default function SubscribeToCity({ navigation }) {
               ...styles.container,
               justifyContent: "flex-start",
               // alignItems: "center",
-              flexDirection: "column",
+              flexDirection: "row",
             }}
           >
             <Text style={[styles.statustext, { paddingBottom: 5 }]}>
@@ -119,7 +119,7 @@ export default function SubscribeToCity({ navigation }) {
             </Text>
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.date}>
-                {moment(TourData.startDate).format("DD/MM/YYYY")} {" ->"}
+                {moment(TourData.startDate).format("DD/MM")} {" ->"}
               </Text>
               <Text style={styles.date}>
                 {"  " + moment(TourData.endDate).format("DD/MM/YYYY")}
@@ -422,7 +422,7 @@ const styles = StyleSheet.create({
   statustext: {
     fontFamily: "Inter_500Medium",
     fontSize: 15,
-    marginRight: 20,
+    marginRight: 8,
     // textTransform: "uppercase",
     color: colors.text,
   },

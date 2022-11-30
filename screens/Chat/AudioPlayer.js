@@ -6,7 +6,7 @@ import { TouchableOpacity, View } from "react-native";
 import { colors } from "../../assets/colors";
 import { ChatContext } from "../../tools/Context";
 const AudioPlayer = ({ uri, noSend, sendAudioMessage }) => {
-  const [sound, setSound] = React.useState(undefined);
+  const [sound, setSound] = React.useState({});
   const [status, setstatus] = React.useState(0);
   const [resume, setresume] = React.useState(0);
   const [isPlaying, setisPlaying] = React.useState(false);
@@ -14,38 +14,73 @@ const AudioPlayer = ({ uri, noSend, sendAudioMessage }) => {
   const { deleteUri } = React.useContext(ChatContext);
 
   async function playSound() {
-    if (sound) await sound?.unloadAsync();
-    await Audio.setAudioModeAsync({
-      allowsRecordingIOS: false,
-    });
-    const { sound, status } = await Audio.Sound.createAsync(
-      { uri: uri.uri },
-      {
-        shouldPlay: true,
-        progressUpdateIntervalMillis: 100,
-        positionMillis: resume === max ? 0 : resume,
-      },
-      (status) => {
-        setstatus(status.positionMillis);
-        if (status.positionMillis === status.playableDurationMillis)
-          setisPlaying(false);
-      }
-    );
-    setSound(sound);
-    setmax(status.playableDurationMillis);
+    // if (sound) await sound?.unloadAsync();
+ 
+    // const { sound, status } = await Audio.Sound.createAsync(
+    //   { uri: uri.uri },
+    //   {
+    //     shouldPlay: true,
+    //     progressUpdateIntervalMillis: 100,
+    //     positionMillis: resume === max ? 0 : resume,
+    //   },
+    //   (status) => {
+    //     setstatus(status.positionMillis);
+    //     if (status.positionMillis === status.playableDurationMillis)
+    //       setisPlaying(false);
+    //   }
+    // );
+    // setSound(sound);
+     await sound.playAsync();
     setisPlaying(true);
   }
 
   const StopPlaying = async () => {
-    const res = await sound.pauseAsync();
-    setresume(res.positionMillis);
-    setisPlaying(false);
+    try {
+      const res = await sound.pauseAsync();
+      setresume(res.positionMillis);
+      setisPlaying(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const SlidePlaying = async (value) => {
-    await sound.playFromPositionAsync(value);
-    setisPlaying(true);
+    try {
+      await sound.playFromPositionAsync(value);
+      setisPlaying(true);
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  React.useEffect(() => {
+    const initAudio = async () => {
+      try {
+        await Audio.setAudioModeAsync({
+          allowsRecordingIOS: false,
+        });
+        if (sound) await sound?.unloadAsync();
+        const { sound, status } = await Audio.Sound.createAsync(
+          { uri: uri.uri },
+          {
+            shouldPlay: false,
+            progressUpdateIntervalMillis: 100,
+            positionMillis: resume === max ? 0 : resume,
+          },
+          (status) => {
+            setstatus(status.positionMillis);
+            if (status.positionMillis === status.playableDurationMillis)
+              setisPlaying(false);
+          }
+        );
+        setSound(sound);
+        setmax(status.playableDurationMillis);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    initAudio();
+  }, []);
 
   return (
     <View
@@ -77,12 +112,16 @@ const AudioPlayer = ({ uri, noSend, sendAudioMessage }) => {
         minimumValue={0}
         maximumValue={max}
         onSlidingStart={async () => {
-          await sound.pauseAsync();
+          try {
+            await sound.pauseAsync();
+          } catch (error) {
+            console.log(error);
+          }
         }}
         onSlidingComplete={(value) => SlidePlaying(value)}
         // onResponderEnd
         minimumTrackTintColor={colors.primary}
-        maximumTrackTintColor="#000000"
+        maximumTrackTintColor={colors.secondary}
         thumbTintColor={colors.primary}
       />
       {noSend === true ? null : (

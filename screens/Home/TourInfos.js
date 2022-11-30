@@ -209,7 +209,7 @@ const SubscribeToTour = () => {
             loop={true}
             autoPlay
             source={TourInfoAnim}
-            speed={0.3}
+            speed={1}
             style={{ marginTop: 15 }}
             resizeMode="contain"
           />

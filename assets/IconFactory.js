@@ -125,7 +125,7 @@ export const ToDuMap = require("./animations/ToDuMap.json");
 export const ToMaMap = require("./animations/ToMaMap.json");
 export const contactusAnim = require("./animations/contactusAnim.json");
 export const chatAnim = require("./animations/chatAnim.json");
-export const AppointmentAnimMa = require("./animations/AppointmentAnimMa.json");
+// export const AppointmentAnimMa = require("./animations/AppointmentAnimMa.json");
 export const AppointmentAnimMaEnd = require("./animations/AppointmentAnimMaEnd.json");
 export const AppointmentAnimDu = require("./animations/AppointmentAnimDu.json");
 export const carAnim = require("./animations/carAnim.json");
@@ -135,6 +135,9 @@ export const fromMaAnim = require("./animations/FromMa.json");
 export const TourInfoAnim = require("./animations/TourInfoAnim.json");
 export const micAnim = require("./animations/micAnim.json");
 export const rightArrow = require("./animations/rightArrow.json");
+export const recordingJson = require("./animations/recording.json");
+export const tomaAp = require("./animations/tomaAp.json");
+export const toduAp = require("./animations/toduAp.json");
 
 //steps
 export const step1Png = require("./imgs/steps/step1.png");

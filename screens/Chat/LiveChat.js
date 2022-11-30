@@ -25,6 +25,7 @@ import {
   gifchat4,
   notFound,
   micAnim,
+  recordingJson,
 } from "../../assets/IconFactory";
 import axios, {
   BaseURL,
@@ -369,7 +370,10 @@ const AudioIcons = ({ text, open, setOpen }) => {
   return text === "" ? (
     <>
       <TouchableOpacity
-        onPress={() => setOpen(true)}
+        onPress={() => {
+          setOpen(true);
+          startRecording();
+        }}
         style={{
           width: 75,
           height: 75,
@@ -395,28 +399,20 @@ const AudioIcons = ({ text, open, setOpen }) => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text
-              style={{
-                fontFamily: "Manrope_700Bold",
-                color: colors.primary,
-                fontSize: 15,
-                textAlign: "center",
-              }}
-            >
-              {recording ? "Aufnahmen" : "Sprachnachricht aufnehmen"}
-            </Text>
+           
             <TouchableOpacity
               onPress={HandelRecording}
               style={{
-                width: 150,
-                height: 150,
+                width: 200,
+                height: 200,
                 zIndex: 999,
               }}
             >
               <LottieView
-                source={micAnim}
+                source={recordingJson}
                 loop={true}
-                speed={2}
+                speed={1}
+                autoPlay
                 resizeMode="contain"
                 ref={ref}
               />
@@ -425,7 +421,7 @@ const AudioIcons = ({ text, open, setOpen }) => {
               style={styles.callContainer}
               onPress={HandleClose}
             >
-              <Text style={styles.callText}>Sprachnachricht löschen</Text>
+              <Text style={styles.callText}>Aufnahme beenden</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -586,7 +582,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     // margin: 10,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.bg,
     borderWidth: 2,
     borderColor: colors.primary,
     height: 50,
@@ -604,7 +600,7 @@ const styles = StyleSheet.create({
   },
   callText: {
     fontFamily: "Manrope_700Bold",
-    color: colors.bg,
+    color: colors.primary,
     fontSize: 15,
     textAlign: "center",
   },
