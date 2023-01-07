@@ -100,6 +100,10 @@ export const maroc = require("./imgs/maroc.png");
 export const pdf = require("./imgs/pdf.png");
 export const nurem = require("./imgs/nurem.jpg");
 export const adminPdp = require("./imgs/adminPdp.jpeg");
+export const checkIcon = require("./imgs/checkIcon.png");
+export const checkSuccess = require("./imgs/checkSuccess.png");
+export const CalendarIcon = require("./imgs/CalendarIcon.png");
+export const man = require("./imgs/man.png");
 
 
 //animations
@@ -125,7 +129,7 @@ export const ToDuMap = require("./animations/ToDuMap.json");
 export const ToMaMap = require("./animations/ToMaMap.json");
 export const contactusAnim = require("./animations/contactusAnim.json");
 export const chatAnim = require("./animations/chatAnim.json");
-// export const AppointmentAnimMa = require("./animations/AppointmentAnimMa.json");
+export const blueRedArrow = require("./animations/blueRedArrow.json");
 export const AppointmentAnimMaEnd = require("./animations/AppointmentAnimMaEnd.json");
 export const AppointmentAnimDu = require("./animations/AppointmentAnimDu.json");
 export const carAnim = require("./animations/carAnim.json");
@@ -138,6 +142,9 @@ export const rightArrow = require("./animations/rightArrow.json");
 export const recordingJson = require("./animations/recording.json");
 export const tomaAp = require("./animations/tomaAp.json");
 export const toduAp = require("./animations/toduAp.json");
+export const sliderButtonAnimation = require("./animations/sliderButtonAnimation.json");
+export const calander = require("./animations/calander.json");
+export const boxes = require("./animations/boxes.json");
 
 //steps
 export const step1Png = require("./imgs/steps/step1.png");

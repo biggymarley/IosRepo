@@ -1,27 +1,33 @@
 import { Feather, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
+import LottieView from "lottie-react-native";
 
 import moment from "moment";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  Vibration,
-  View
+  View,
+  Image,
 } from "react-native";
-import { colors } from "../../assets/colors";
+import SwipeButton from "rn-swipe-button";
+import { colors, windowWidth } from "../../assets/colors";
 import axios, { ToursUrl } from "../../tools/Apis";
 import {
   ToursContext,
   ToursProvider,
   UserContext,
-  UserTourContext
+  UserTourContext,
 } from "../../tools/Context";
 import MenuButton from "../../tools/MenuButton";
 import TourModal from "./ToursModal";
-
+import {
+  checkIcon,
+  checkSuccess,
+  sliderButtonAnimation,
+} from "../../assets/IconFactory";
 export default function SubscribeToTour({ navigation }) {
   const [tours, settours] = useState([]);
   const [Localtour, setLocaltour] = useState(null);
@@ -105,34 +111,6 @@ export default function SubscribeToTour({ navigation }) {
                   display: "flex",
                   alignItems: "center",
                   flexDirection: "row",
-                  flexWrap: "wrap",
-                  paddingTop: 15,
-                }}
-              >
-                <Text style={styles.subdesc}>
-                  -{">"} Bis unten scrollen und
-                </Text>
-                <TouchableOpacity
-                  style={{
-                    ...styles.butn,
-                  }}
-                  activeOpacity={1}
-                >
-                  <Text
-                    style={{
-                      ...styles.btnText,
-                    }}
-                  >
-                    {"Tour abonnieren"}
-                  </Text>
-                </TouchableOpacity>
-                <Text style={{ ...styles.subdesc }}>anklicken</Text>
-              </View>
-              <View
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  flexDirection: "row",
                   paddingTop: 15,
                 }}
               >
@@ -150,26 +128,50 @@ export default function SubscribeToTour({ navigation }) {
                   paddingTop: 15,
                 }}
               >
+                <Text style={styles.subdesc}>-{">"} Tour abonnieren</Text>
+                <SwipeButton
+                  shouldResetAfterSuccess={true}
+                  containerStyles={{ borderRadius: 25, width: 150 }}
+                  height={30}
+                  railBackgroundColor={colors.primary}
+                  railBorderColor={colors.primary}
+                  railFillBackgroundColor={colors.bg}
+                  titleColor={colors.bg}
+                  railFillBorderColor={colors.bg}
+                  railStyles={{ borderRadius: 25 }}
+                  thumbIconBorderColor={colors.bg}
+                  thumbIconComponent={CheckoutButton}
+                  titleStyle={{ fontFamily: "Inter_500Medium" }}
+                  titleFontSize={15}
+                  title="abonnieren"
+                />
+              </View>
+
+              <View
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                  paddingTop: 15,
+                }}
+              >
                 <Text style={styles.subdesc}>
-                  -{">"} Bis ganz unten scrollen und
+                  -{">"} Ganz unten rechts Auswahl bestätigen{" "}
                 </Text>
                 <TouchableOpacity
                   style={{
-                    ...styles.butn,
-                    ...styles.btnred,
+                    ...styles.next,
+                    padding: 5,
+                    paddingHorizontal: 5,
+                    marginLeft: 5,
                   }}
                   activeOpacity={1}
                 >
-                  <Text
-                    style={{
-                      ...styles.btnText,
-                      ...styles.btntxtred,
-                    }}
-                  >
-                    {"Auswahl bestätigen"}
+                  <Text style={{ ...styles.nextText, fontSize: 14 }}>
+                    Auswahl bestätigen
                   </Text>
                 </TouchableOpacity>
-                <Text style={styles.subdesc}>anklicken</Text>
               </View>
             </View>
             <TourMap tours={tours} />
@@ -187,7 +189,13 @@ export default function SubscribeToTour({ navigation }) {
             </Text> */}
 
             <ChangeToLocalShippment Localtour={Localtour} />
-            <TouchableOpacity style={styles.next} onPress={SubTotour}>
+            <TouchableOpacity
+              style={styles.next}
+              onPress={() => {
+                SubTotour();
+                navigation.navigate("Home");
+              }}
+            >
               <Text style={styles.nextText}>Auswahl bestätigen</Text>
             </TouchableOpacity>
           </View>
@@ -197,6 +205,64 @@ export default function SubscribeToTour({ navigation }) {
     );
   else return null;
 }
+
+const SliderAnimatedButton = () => {
+  return (
+    <View
+      style={{
+        ...styles.dateCont,
+        marginBottom: 20,
+        marginHorizontal: 5,
+        backgroundColor: colors.bg,
+        borderWidth: 1,
+        borderColor: colors.primary,
+        borderRadius: 25,
+        justifyContent: "flex-end",
+        paddingVertical: 5,
+        position: "relative",
+      }}
+    >
+      <View
+        style={{
+          position: "absolute",
+          right: "40%",
+          bottom: "50%",
+          transform: [{ translateY: 8 }],
+        }}
+      >
+        <Text
+          style={{
+            fontFamily: "Inter_500Medium",
+            fontSize: 18,
+            color: colors.secondary,
+          }}
+        >
+          abonniert
+        </Text>
+      </View>
+      <View
+        style={{
+          width: 35,
+          height: 35,
+          backgroundColor: "#ffffff",
+          borderRadius: 25,
+          justifyContent: "center",
+          alignItems: "center",
+          position: "relative",
+          right: 5,
+        }}
+      >
+        <LottieView
+          source={sliderButtonAnimation}
+          speed={0.7}
+          autoPlay={true}
+          loop={true}
+          resizeMode="cover"
+        />
+      </View>
+    </View>
+  );
+};
 
 const ChangeToLocalShippment = ({ Localtour }) => {
   return (
@@ -231,27 +297,50 @@ const TourMap = ({ tours }) => {
   );
 };
 
+const CheckoutButton = () => {
+  return (
+    <View
+      style={{
+        width: 40,
+        height: 40,
+        backgroundColor: "#ffffff",
+        borderRadius: 5,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Image source={checkIcon} style={{ width: "50%" }} resizeMode="contain" />
+    </View>
+  );
+};
+let forceResetLastButton = null;
+
 const TourCard = ({ tour, tIndex }) => {
   const { ShowTourInfo } = useContext(ToursContext);
   const { tourId, setTourId } = useContext(UserTourContext);
   const ToggleTourId = (id) => {
     if (tourId === id) setTourId("");
-    else setTourId(id);
   };
+
+  useEffect(() => {
+    if (tourId !== tour?._id && forceResetLastButton) forceResetLastButton();
+  }, [tourId]);
+
   return (
     <TouchableOpacity
       style={{
         ...styles.tourCard,
         ...(tourId === tour?._id && {
-          borderWidth: 2,
+          borderWidth: 1,
           borderColor: colors.primary,
         }),
       }}
-      onPress={() => ToggleTourId(tour?._id)}
-      onLongPress={() => {
-        Vibration.vibrate();
-        ShowTourInfo(tIndex);
-      }}
+      activeOpacity={tourId === tour?._id ? 0.7 : 1}
+      onPress={() => tourId === tour?._id && setTourId("")}
+      // onLongPress={() => {
+      //   Vibration.vibrate();
+      //   ShowTourInfo(tIndex);
+      // }}
     >
       <View style={styles.dateCont}>
         <Text style={styles.tname}>{tour?.Tname} :</Text>
@@ -263,6 +352,31 @@ const TourCard = ({ tour, tIndex }) => {
           />
         </TouchableOpacity>
       </View>
+
+      {tourId === tour?._id ? (
+        <SliderAnimatedButton />
+      ) : (
+        <SwipeButton
+          containerStyles={{ borderRadius: 25, marginVertical: 25 }}
+          height={40}
+          onSwipeFail={() => ToggleTourId(tour?._id)}
+          onSwipeSuccess={() => setTourId(tour?._id)}
+          forceReset={(reset) => {
+            forceResetLastButton = reset;
+          }}
+          railBackgroundColor={colors.primary}
+          railBorderColor={colors.primary}
+          railFillBackgroundColor={colors.bg}
+          titleColor={colors.bg}
+          railFillBorderColor={colors.bg}
+          railStyles={{ borderRadius: 25 }}
+          thumbIconBorderColor={colors.bg}
+          thumbIconComponent={CheckoutButton}
+          titleStyle={{ fontFamily: "Inter_500Medium", fontSize: 16 }}
+          title="abonnieren"
+        />
+      )}
+
       <View style={styles.dateCont}>
         <Text style={styles.date}>
           {moment(tour?.startDate).format("DD/MM/YYYY")}
@@ -351,10 +465,10 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   tname: {
-    fontFamily: "Inter_900Black",
+    fontFamily: "Inter_500Medium",
     color: colors.primary,
     fontSize: 18,
-    marginBottom: 25,
+    marginBottom: 15,
     opacity: 0.7,
     textTransform: "uppercase",
   },
@@ -393,8 +507,9 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   next: {
-    backgroundColor: colors.primary,
-    // margin: 10,
+    backgroundColor: colors.bg,
+    borderWidth: 2,
+    borderColor: colors.primary,
     marginTop: "auto",
     marginBottom: 10,
     padding: 10,
@@ -408,7 +523,7 @@ const styles = StyleSheet.create({
   },
   nextText: {
     fontFamily: "Inter_700Bold",
-    color: "white",
+    color: colors.primary,
     fontSize: 17,
   },
 });

@@ -1,17 +1,65 @@
-import { Entypo, Ionicons } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
+import { useFocusEffect } from "@react-navigation/native";
+import LottieView from "lottie-react-native";
 import moment from "moment";
-import React, { useContext } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import React, { useContext, useState } from "react";
+import {
+  Image,
+  Modal,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { boxes, calander } from "../../assets/IconFactory";
 import { colors } from "../../assets/colors";
-import { BaseURL, GetFileUrl } from "../../tools/Apis";
+import axios, { BaseURL, GetFileUrl } from "../../tools/Apis";
 import { UserContext, UserTourContext } from "../../tools/Context";
 import MenuButton from "../../tools/MenuButton";
-
 export default function UserTour({ navigation }) {
   const { TourData } = useContext(UserTourContext);
   const { IsLogged, userData } = useContext(UserContext);
   const url = `${BaseURL}${GetFileUrl}/`;
+  const [apModalStatus, setApModalStatus] = useState({
+    isOpen: false,
+    value: "Anfang Januar",
+  });
+  const [driveStatus, setDriveStatus] = useState({
+    deliveryInMo: "",
+    driveToMo: "",
+  });
+  const OpenModal = (value, icon, isCalander) => {
+    setApModalStatus({
+      isOpen: true,
+      value: value,
+      icon: icon,
+      isCalander: isCalander,
+    });
+  };
+
+  const CloseModal = () => {
+    setApModalStatus({ isOpen: false, value: "Anfang Januar", icon: calander });
+  };
+
+  const getApDrive = async () => {
+    try {
+      const data = await axios.get("/api/v1/appointmentshipping", {
+        headers: {
+          Authorization: `Bearer ${IsLogged.token}`,
+        },
+      });
+      setDriveStatus({ ...data?.data?.appointments?.[0] });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getApDrive();
+    }, [])
+  );
 
   return (
     <>
@@ -29,100 +77,288 @@ export default function UserTour({ navigation }) {
             style={styles.gif}
             resizeMode="contain"
           />
-          <View
-            style={{
-              ...styles.container,
-              paddingBottom: 0,
-              justifyContent: "flex-start",
-              alignItems: "center",
-              backgroundColor: colors.bg,
-            }}
-          >
-            <Text style={styles.statustext}>- Status :</Text>
-            <StatusHandler status={TourData.status} />
-          </View>
-          <View
-            style={{
-              ...styles.container,
-              justifyContent: "flex-start",
-              // alignItems: "center",
-              paddingTop: 6,
 
-              flexDirection: "row",
+          <View
+            style={{
+              backgroundColor: colors.bg,
+              position: "relative",
+              // flex: 1,
+              margin: 6,
+              marginBottom: 50,
+              borderRadius: 20,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 7,
+              },
+              shadowOpacity: 0.41,
+              shadowRadius: 9.11,
+              elevation: 14,
             }}
           >
-            <Text style={[styles.statustext, { paddingBottom: 5 }]}>
-              - Anmeldungszeitraum :
-            </Text>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={styles.date}>
-                {moment(TourData.startDate).format("DD/MM")} {" ->"}
-              </Text>
+            <AppointmentsButtons
+              OpenModal={OpenModal}
+              driveStatus={driveStatus}
+            />
+            <View
+              style={{
+                ...styles.container,
+                justifyContent: "space-between",
+                alignItems: "center",
+                paddingBottom: 8,
+                // borderTopWidth: 1.8,
+                marginTop: 60,
+                borderColor: "#0000004f",
+                // backgroundColor: colors.bg,
+              }}
+            >
+              <Text style={styles.statustext}>Status :</Text>
+              <StatusHandler status={TourData.status} />
+            </View>
+            <View
+              style={{
+                ...styles.container,
+                justifyContent: "space-between",
+                // alignItems: "center",
+                paddingTop: 8,
+                flexDirection: "row",
+                paddingBottom: 8,
+                // borderBottomWidth: 1,
+                // borderColor: colors.primary,
+              }}
+            >
+              <Text style={[styles.statustext]}>Anmeldungszeitraum :</Text>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={styles.date}>
+                  {moment(TourData.startDate).format("DD/MM")} {" ->"}
+                </Text>
+                <Text style={styles.date}>
+                  {"  " + moment(TourData.endDate).format("DD/MM/YYYY")}
+                </Text>
+              </View>
+            </View>
+
+            <View
+              style={{
+                ...styles.container,
+                justifyContent: "space-between",
+                alignItems: "center",
+                paddingTop: 8,
+                flexDirection: "row",
+                paddingBottom: 15,
+                borderBottomWidth: 1.8,
+                borderColor: colors.secondaryTrans,
+              }}
+            >
+              <Text style={styles.statustext}>Tag der Tour :</Text>
               <Text style={styles.date}>
                 {"  " + moment(TourData.endDate).format("DD/MM/YYYY")}
               </Text>
             </View>
-          </View>
 
-          {userData.cityId && TourData.cities?.length > 0 && (
-            <View
-              style={{
-                ...styles.container,
-                paddingBottom: 0,
-                paddingTop: 0,
-                justifyContent: "flex-start",
-                alignItems: "center",
-                backgroundColor: colors.bg,
-              }}
-            >
-              <Text style={styles.statustext}>- Angemeldet für: </Text>
-              <Text style={styles.date}>
-                {userData.cityId &&
-                  TourData.cities?.length > 0 &&
-                  TourData.cities.filter((e) => e._id === userData.cityId)[0]
-                    .cityName}
-              </Text>
-            </View>
-          )}
-          <View
-            style={{
-              ...styles.container,
-              justifyContent: "flex-start",
-              alignItems: "center",
-              backgroundColor: colors.bg,
-              paddingTop: 0,
-
-            }}
-          >
-            <Text style={styles.statustext}>- Tag der Tour :</Text>
-            <Text style={styles.date}>
-              {"  " + moment(TourData.endDate).format("DD/MM/YYYY")}
-            </Text>
-          </View>
-          <View style={{ padding: 20, backgroundColor: colors.bg }}>
-            <CitysMap cities={TourData.cities} cindex={TourData.citiesStatus} />
+            <ScrollView>
+              <View
+                style={{
+                  padding: 10,
+                  // flex: 1,
+                  justifyContent: "center",
+                }}
+              >
+                <CitysMap
+                  cities={TourData.cities}
+                  cindex={TourData.citiesStatus}
+                />
+              </View>
+            </ScrollView>
           </View>
         </ScrollView>
+        <ApModal CloseModal={CloseModal} apModalStatus={apModalStatus} />
       </View>
     </>
   );
 }
 
+const ApModal = ({ apModalStatus, CloseModal }) => {
+  return (
+    <Modal
+      animationType="fade"
+      transparent={true}
+      visible={apModalStatus.isOpen}
+    >
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={CloseModal}
+        style={{
+          flex: 1,
+          justifyContent: "flex-end",
+          alignItems: "center",
+          backgroundColor: "#0000004f",
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: colors.bg,
+            padding: 20,
+            paddingVertical: 20,
+            width: "100%",
+            // alignItems: "center",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
+            borderWidth: 2,
+            borderColor: colors.primary,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 7,
+            },
+            shadowOpacity: 0.41,
+            shadowRadius: 9.11,
+            elevation: 14,
+          }}
+        >
+          <View style={{ alignItems: "center" }}>
+            <LottieView
+              source={apModalStatus.icon}
+              style={apModalStatus.isCalander ? { width: 200 } : { width: 160 }}
+              resizeMode="contain"
+              loop={true}
+              autoPlay={true}
+            />
+          </View>
+          <Text
+            style={{
+              fontFamily: "Inter_400Regular",
+              fontSize: 18,
+              paddingVertical: 20,
+              color: colors.text,
+              textAlign:"center"
+            }}
+          >
+            {apModalStatus.isCalander
+              ? "Nächste planmäßige Fahrt nach MA:"
+              : "Zustellung in MA erfolgt ab:"}
+          </Text>
+          <Text
+            style={{
+              fontFamily: "Inter_600SemiBold",
+              fontSize: 18,
+              color: colors.secondary,
+            }}
+          >
+            {apModalStatus.value}
+          </Text>
+          <Text
+            style={{
+              fontFamily: "Inter_400Regular",
+              fontSize: 14,
+              color: colors.text,
+              borderTopWidth: 1,
+              borderColor: colors.primary,
+              marginTop: 25,
+              paddingTop: 15,
+            }}
+          >
+            {`Mit besten Grüßen aus Nürnberg\nIhr KAL&ROK Team\nAbdelhafid El K.`}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    </Modal>
+  );
+};
+
+const AppointmentsButtons = ({ OpenModal, driveStatus }) => {
+  return (
+    <View
+      style={{
+        top: -35,
+        position: "absolute",
+        marginTop: 10,
+        marginHorizontal: 10,
+        backgroundColor: colors.bg,
+        borderRadius: 12,
+        paddingVertical: 10,
+        shadowColor: colors.text,
+        shadowOffset: {
+          width: 0,
+          height: 7,
+        },
+        shadowOpacity: 0.41,
+        shadowRadius: 9.11,
+        elevation: 14,
+      }}
+    >
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            OpenModal(driveStatus.deliveryInMo, calander, true);
+          }}
+          style={{
+            flexBasis: "50%",
+            alignItems: "center",
+            padding: 3,
+            paddingVertical: 15,
+            borderRightWidth: 2,
+            borderColor: colors.secondaryTrans,
+          }}
+        >
+          <Text
+            style={{
+              fontFamily: "Inter_400Regular",
+              fontSize: 16,
+              color: colors.primary,
+            }}
+          >
+            Fahrt nach MA
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            OpenModal(driveStatus.driveToMo, boxes, false);
+          }}
+          style={{
+            flexBasis: "50%",
+            alignItems: "center",
+            padding: 3,
+            paddingVertical: 15,
+          }}
+        >
+          <Text
+            style={{
+              fontFamily: "Inter_400Regular",
+              fontSize: 16,
+              color: colors.primary,
+            }}
+          >
+            Zustellung in MA
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
 const CitysMap = ({ cities, cindex }) => {
   return cities.map((city, index) => (
     <View style={styles.timlinecont} key={index}>
-      <Ionicons
+      {/* <Ionicons
         name="ios-git-commit-outline"
-        size={25}
+        size={35}
         color={colors.primary}
         style={styles.timlineicon}
-      />
+      /> */}
       <View style={styles.subCont}>
         <Text style={styles.city}>{city.cityName}</Text>
         <Entypo
           name="flag"
           size={24}
-          color={cindex >= index ? colors.success : colors.primary}
+          color={cindex >= index ? colors.success : colors.bg}
         />
       </View>
     </View>
@@ -184,9 +420,23 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "space-between",
     // alignItems:"center",
-    width: "60%",
-    marginBottom: 10,
+    borderWidth: 2,
+    borderRadius: 12,
+    borderColor: colors.bg,
+    padding: 10,
+    paddingHorizontal: 20,
+    width: "100%",
     flexDirection: "row",
+    backgroundColor: colors.primary,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+    elevation: 3,
   },
   btnred: {
     borderColor: "red",
@@ -209,13 +459,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     marginBottom: 5,
-    // marginLeft: 20,
   },
   date: {
-    fontFamily: "Manrope_600SemiBold",
+    fontFamily: "Inter_700Bold",
     color: "black",
     opacity: 0.7,
-    marginBottom: 5,
   },
   CitySubs: {
     fontFamily: "Manrope_600SemiBold",
@@ -226,8 +474,8 @@ const styles = StyleSheet.create({
   },
   city: {
     fontFamily: "Inter_700Bold",
-    color: colors.text,
-    fontSize: 14,
+    color: colors.bg,
+    fontSize: 16,
   },
   centeredView: {
     flex: 1,
@@ -239,6 +487,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
     padding: 20,
+    paddingHorizontal: 10,
     paddingBottom: 0,
   },
   gif: {
@@ -247,34 +496,48 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   active: {
-    borderColor: colors.success,
+    borderColor: colors.bg,
+    backgroundColor: colors.success,
   },
   hold: {
-    borderColor: "#ffa500",
+    borderColor: colors.bg,
+    backgroundColor: "#ffa500",
   },
   textactive: {
-    color: colors.success,
+    color: colors.bg,
   },
   texthold: {
-    color: "#ffa500",
+    color: colors.bg,
   },
   chiptext: {
+    fontSize: 14,
     fontFamily: "Manrope_700Bold",
+    textAlign: "center",
+    textTransform: "uppercase",
   },
   statustext: {
-    fontFamily: "Manrope_700Bold",
-    fontSize: 15,
+    fontFamily: "Inter_300Light",
+    fontSize: 16,
     marginRight: 8,
-
-    // textTransform: "uppercase",
     color: colors.text,
   },
   chip: {
     padding: 2,
+    backgroundColor: colors.bg,
     paddingRight: 12,
     paddingLeft: 12,
-    borderRadius: 50,
+    borderRadius: 6,
     borderWidth: 2,
+    // width: 120,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+    elevation: 3,
   },
   modalView: {
     flex: 1,

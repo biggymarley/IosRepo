@@ -393,7 +393,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    borderRadius: 20,
+    borderRadius: 8,
     padding: 10,
     paddingHorizontal: 30,
     elevation: 2,
@@ -405,9 +405,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#2196F3",
   },
   textStyle: {
-    fontFamily: "Inter_900Black",
+    fontFamily: "Inter_600SemiBold",
     color: "white",
     textAlign: "center",
+    textTransform:'uppercase'
   },
   modalText: {
     marginBottom: 15,

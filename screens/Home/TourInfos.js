@@ -99,7 +99,7 @@ const SubscribeToCity = () => {
                     <View
                       style={{
                         height: 2,
-                        backgroundColor: colors.primary,
+                        backgroundColor: colors.lightBlue,
                         width: "80%",
                         alignSelf: "center",
                         marginVertical: 5,
@@ -122,7 +122,7 @@ const SubscribeToCity = () => {
                     <View
                       style={{
                         height: 2,
-                        backgroundColor: colors.primary,
+                        backgroundColor: colors.lightBlue,
                         width: "80%",
                         alignSelf: "center",
                         marginVertical: 5,
@@ -322,7 +322,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
     borderTopWidth: 2,
-    borderColor: colors.primary,
+    borderColor: colors.lightBlue,
     flexDirection: "row",
   },
   head: {

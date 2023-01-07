@@ -90,7 +90,7 @@ export default function VerifyAccount({
       const value = await AsyncStorage.getItem("IsLogged");
       const res = value != null ? JSON.parse(value) : null;
       setIsLogged({ token: res.token, isLogged: true });
-      navigation.jumpTo("Home");
+      navigation.jumpTo("Chat", { screen: "LiveChat" });
       navigation.popToTop();
     } catch (error) {}
   };
@@ -216,7 +216,7 @@ const VerifiedContainer = () => {
         loop={false}
         style={{ width: windowWidth }}
       />
-      <Text style={styles.desc}>Verification Completed</Text>
+      <Text style={styles.desc}>Account Verifiziert</Text>
     </View>
   );
 };

@@ -61,7 +61,7 @@ export default function TourStack({ navigation }) {
       setTourData({ ...tour.data.data });
       setTourId("");
       setisLoading(false);
-      navigation.navigate("KAL&ROK on Tour", { screen: "SubscribeToCity" });
+      // navigation.navigate("KAL&ROK on Tour", { screen: "SubscribeToCity" });
     } catch (error) {
       setisLoading(false);
       Alert.alert("error", "please retry");

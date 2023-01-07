@@ -26,6 +26,7 @@ export const colors = {
   blueBg:'#FFFFFF',
   greyBg:"#FFFFFF",
   success: "#4BB543",
+  lightBlue:"#418DFF"
 };
 export const windowWidth = Math.round(Dimensions.get("window").width);
 export const windowHeight = Math.round(Dimensions.get("window").height);

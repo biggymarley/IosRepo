@@ -52,7 +52,7 @@ import Loading from "./tools/Loading";
 // import { createNavigationContainerRef } from '@react-navigation/native';
 const Drawer = createDrawerNavigator();
 const navigationRef = createNavigationContainerRef();
-const {StatusBarManager} = NativeModules
+const { StatusBarManager } = NativeModules;
 export default function App() {
   let [fontsLoaded] = useFonts({
     Inter_100Thin,
@@ -352,20 +352,16 @@ export default function App() {
     }
   };
 
-
   useEffect(() => {
-  const fetch = async() => {
-    try {
-      await StatusBarManager.getHeight((height) => {
-         setSheight(height.height)
-      })
-    } catch (error) {
-      
-    }
-  }   
-  fetch()
-  },[])
-  
+    const fetch = async () => {
+      try {
+        await StatusBarManager.getHeight((height) => {
+          setSheight(height.height);
+        });
+      } catch (error) {}
+    };
+    fetch();
+  }, []);
 
   if (!fontsLoaded) return <Loading />;
   return (
@@ -400,43 +396,42 @@ export default function App() {
             setAccountDeletedModal,
           }}
         >
-          <StatusBar
-            barStyle="dark-content"
-            hidden={false}
-          />
-          <SafeAreaView style={{ flex: 1, marginTop:Platform.OS ? SHeight : 0 }}>
-          <NavigationContainer theme={NavTheme} ref={navigationRef}>
-            <Drawer.Navigator
-              drawerContent={(props) => <CostumDrawer {...props} />}
-              screenOptions={{
-                drawerStyle: {
-                  width: windowWidth * 0.8,
-                },
-              }}
-            >
-              {screensData.map((screen, index) => (
-                <Drawer.Screen
-                  key={index}
-                  name={screen.name}
-                  component={screen.component}
-                  options={{
-                    drawerLabelStyle: {
-                      fontFamily: "Manrope_600SemiBold",
-                      fontSize: 14,
-                    },
-                    drawerActiveTintColor: colors.primary,
-                    drawerInActiveTintColor: "rgba(255, 255, 255, 1)",
-                    ...screen.options,
-                  }}
+          <StatusBar barStyle="dark-content" hidden={false} />
+          <SafeAreaView
+            style={{ flex: 1, marginTop: Platform.OS ? SHeight : 0 }}
+          >
+            <NavigationContainer theme={NavTheme} ref={navigationRef}>
+              <Drawer.Navigator
+                drawerContent={(props) => <CostumDrawer {...props} />}
+                screenOptions={{
+                  drawerStyle: {
+                    width: windowWidth * 0.8,
+                  },
+                }}
+              >
+                {screensData.map((screen, index) => (
+                  <Drawer.Screen
+                    key={index}
+                    name={screen.name}
+                    component={screen.component}
+                    options={{
+                      drawerLabelStyle: {
+                        fontFamily: "Manrope_600SemiBold",
+                        fontSize: 14,
+                      },
+                      drawerActiveTintColor: colors.primary,
+                      drawerInActiveTintColor: "rgba(255, 255, 255, 1)",
+                      ...screen.options,
+                    }}
                   />
-                  ))}
-            </Drawer.Navigator>
-            <AccountDeleted
-              modalVisible={modalVisible}
-              setModalVisible={setAccountDeletedModal}
+                ))}
+              </Drawer.Navigator>
+              <AccountDeleted
+                modalVisible={modalVisible}
+                setModalVisible={setAccountDeletedModal}
               />
-          </NavigationContainer>
-              </SafeAreaView>
+            </NavigationContainer>
+          </SafeAreaView>
         </UserProvider>
       </SafeAreaView>
     </>
@@ -456,7 +451,7 @@ const AccountDeleted = ({ modalVisible, setModalVisible }) => {
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <Text style={styles.modalText}>
-            {`Schade, dass Sie sich dafür entschieden haben, Ihren Account zu löschen. Ihr Account wurde erfolgreich gelöscht`}
+            {`Schade, dass Sie uns verlassen.\nWir hätten Sie doch gern dabei.\n\nIhr Account wurde erfolgreich gelöscht.`}
           </Text>
           <View
             style={{
@@ -505,10 +500,10 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    borderRadius: 20,
+    borderRadius: 6,
     padding: 10,
     paddingHorizontal: 30,
-    elevation: 2,
+    elevation: 5,
   },
   buttonOpen: {
     backgroundColor: "#F194FF",
@@ -517,14 +512,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#2196F3",
   },
   textStyle: {
-    fontFamily: "Inter_900Black",
+    fontFamily: "Inter_400Regular",
     color: "white",
     textAlign: "center",
+    fontSize:16
   },
   modalText: {
     marginBottom: 45,
     fontFamily: "Manrope_700Bold",
-    textAlign: "center",
+    // textAlign: "start",
   },
   butn: {
     display: "flex",

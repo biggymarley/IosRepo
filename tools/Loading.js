@@ -9,17 +9,6 @@ const Loading = ({ isLoading }) => {
   return (
     <View style={styles.root}>
       <View style={styles.loadingCont}>
-        {/* <Animatable.View
-          animation="slideInRight"
-          useNativeDriver={true}
-          style={{ zIndex: 2 }}
-        >
-          <Image
-            source={logoBlack}
-            style={{ width: 100 }}
-            resizeMode="contain"
-          />
-        </Animatable.View> */}
         <LottieView
           source={kalrokLoading}
           autoPlay
@@ -30,10 +19,6 @@ const Loading = ({ isLoading }) => {
           }}
           resizeMode="cover"
         />
-          {/* <Animatable.View animation="zoomIn" useNativeDriver={true}> */}
-            <Text style={styles.title}>KAL&ROK GmbH</Text>
-          {/* </Animatable.View> */}
-        {/* <LottieView  /> */}
       </View>
       <ActivityIndicator size={45} color={colors.primary} />
     </View>
@@ -60,13 +45,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-  },
-  title: {
-    // fontFamily:'Inter_300Light',
-    fontSize: 24,
-    letterSpacing: 3,
-    position: "relative",
-    top: "-100%",
   },
 });
 

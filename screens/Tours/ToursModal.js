@@ -77,29 +77,7 @@ const TourModal = () => {
                     )}
                   </Text>
                 </View>
-                <View style={{ padding: 20 }}>
-                  <TouchableOpacity
-                    style={{
-                      ...styles.butn,
-                      ...(tourId === tours[ModalIndexActive]._id &&
-                        styles.btnred),
-                    }}
-                    onPress={() => ToggleTourId(tours[ModalIndexActive]._id)}
-                  >
-                    <Text
-                      style={{
-                        ...styles.btnText,
-                        ...(tourId === tours[ModalIndexActive]._id &&
-                          styles.btntxtred),
-                      }}
-                    >
-                      {tourId === tours[ModalIndexActive]._id
-                        ? "Auswahl bestätigen"
-                        : "Tour abonnieren"}
-                    </Text>
-                    {/* <Feather name="user-check" size={24} color={colors.text} /> */}
-                  </TouchableOpacity>
-                </View>
+         
               </ScrollView>
             </View>
           </View>

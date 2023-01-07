@@ -1,10 +1,16 @@
 import LottieView from "lottie-react-native";
 import React, { useContext, useEffect, useRef } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  blueRedArrow,
+  boredhand,
+  editTour,
+  noTour,
+} from "../../assets/IconFactory";
 import { colors, windowWidth } from "../../assets/colors";
-import { boredhand, editTour, noTour } from "../../assets/IconFactory";
 import { UserContext, UserTourContext } from "../../tools/Context";
 import MenuButton from "../../tools/MenuButton";
+
 export default function Tours({ navigation }) {
   const { TourData } = useContext(UserTourContext);
   const { userData } = useContext(UserContext);
@@ -20,13 +26,14 @@ export default function Tours({ navigation }) {
         title="KAL&ROK on Tour"
         navigation={navigation}
         rightBtn={<SubtoTour navigation={navigation} />}
+        
       />
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text style={styles.title}>
+        {/* <Text style={styles.title}>
           {TourData.status === false
             ? "Ihre Tour ist leider aktuell\nnicht aktiv"
             : null}
-        </Text>
+        </Text> */}
         <View style={styles.cont}>
           {TourData.status === true ? (
             <LottieView
@@ -35,7 +42,7 @@ export default function Tours({ navigation }) {
               source={noTour}
               speed={1}
               ref={ref}
-              style={{ width: windowWidth, height: windowWidth * 0.75 }}
+              style={{ width: windowWidth, height: "auto" }}
               resizeMode="cover"
             />
           ) : (
@@ -45,14 +52,14 @@ export default function Tours({ navigation }) {
               source={boredhand}
               speed={0.5}
               ref={ref}
-              style={{ width: windowWidth, height: windowWidth }}
+              style={{ width: windowWidth * 0.87, height: "auto" }}
               resizeMode="cover"
             />
           )}
         </View>
       </View>
 
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.btn}
         onPress={() =>
           userData.tour?._id == null
@@ -69,20 +76,36 @@ export default function Tours({ navigation }) {
             ? "Standort auswählen und anmelden"
             : "Ihre Tour"}
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 }
 
 const SubtoTour = ({ navigation }) => {
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("SubscribeToTour")}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate("SubscribeToTour")}
+      style={{ flexDirection: "row" }}
+    >
       {/* <MaterialCommunityIcons
         name="selection-multiple-marker"
         size={25}
         color={colors.text}
       /> */}
-      <Image source={editTour}  resizeMode="contain" style={{width: 25, height: 30}}/>
+      <LottieView
+        source={blueRedArrow}
+        speed={1}
+        resizeMode="cover"
+        autoPlay={true}
+        loop={true}
+        style={{ width: 30, height: 30 }}
+        // style={{ width: windowWidth, height: windowWidth * 0.9 }}
+      />
+      <Image
+        source={editTour}
+        resizeMode="contain"
+        style={{ width: 25, height: 30 }}
+      />
       {/* <MaterialCommunityIcons name="calculator" size={25} color={colors.text} /> */}
     </TouchableOpacity>
   );
@@ -92,16 +115,16 @@ const styles = StyleSheet.create({
   cont: {
     display: "flex",
     alignItems: "center",
-    height: windowWidth,
+    // height: windowWidth,
     overflow: "hidden",
   },
   title: {
     color: colors.primary,
     textAlign: "center",
     fontFamily: "Manrope_600SemiBold",
-    fontSize: windowWidth * 0.06,
+    fontSize: 90,
     // textTransform: "capitalize",
-    marginTop: 15,
+    marginTop: 50,
     padding: 10,
   },
   btn: {
