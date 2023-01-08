@@ -488,17 +488,17 @@ const CheckSubscription = ({
         <View style={styles.modalView}>
           {tname?.trim() === "Nürnberg & Peripherie" ? (
             <Text style={styles.modalText}>
-              {`Ihr Standort ist ${modalVisible?.name}\nund Sie wollen eine Sendung am ${moment(
+              {`Ihr Standort ist ${
+                modalVisible?.name
+              } und Sie wollen eine Sendung am ${moment(
                 modalVisible?.endDate
-              )?.format(
-                "DD/MM/YYYY"
-              )} abgeben.\n\nIst das richtig?`}
+              )?.format("DD/MM/YYYY")} zum Versand abgeben.\n\nIst das richtig?`}
             </Text>
           ) : (
             <Text style={styles.modalText}>
               {`Damit bestätigen Sie Ihre Teilnahme\nan unserer Tour in ${
                 modalVisible?.name
-              }\nam ${moment(modalVisible?.endDate)?.format(
+              } am ${moment(modalVisible?.endDate)?.format(
                 "DD/MM/YYYY"
               )}.\n\nIst das richtig?`}
             </Text>
