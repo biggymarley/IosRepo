@@ -249,19 +249,19 @@ const ApModal = ({ apModalStatus, CloseModal }) => {
           >
             {apModalStatus.value}
           </Text>
-          <Text
-            style={{
-              fontFamily: "Inter_400Regular",
-              fontSize: 14,
-              color: colors.text,
-              borderTopWidth: 1,
-              borderColor: colors.primary,
-              marginTop: 25,
-              paddingTop: 15,
-            }}
-          >
+          <View style={{ borderTopWidth: 1, borderColor: colors.primary ,	marginTop: 25,
+								paddingTop: 15,}}>
+						<Text
+							style={{
+								fontFamily: "Inter_400Regular",
+								fontSize: 14,
+								color: colors.text,
+							
+							}}
+						>
             {`Mit besten Grüßen aus Nürnberg\nIhr KAL&ROK Team\nAbdelhafid El K.`}
           </Text>
+        </View>
         </View>
       </TouchableOpacity>
     </Modal>
