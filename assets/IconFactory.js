@@ -145,6 +145,8 @@ export const toduAp = require("./animations/toduAp.json");
 export const sliderButtonAnimation = require("./animations/sliderButtonAnimation.json");
 export const calander = require("./animations/calander.json");
 export const boxes = require("./animations/boxes.json");
+export const Phonefix = require("./animations/Phonefix.json");
+export const Phonemobileanim = require("./animations/Phonemobileanim.json");
 
 //steps
 export const step1Png = require("./imgs/steps/step1.png");

@@ -2,8 +2,11 @@ import * as Linking from "expo-linking";
 import LottieView from "lottie-react-native";
 import React, { useContext } from "react";
 import {
-  Image, ScrollView, StyleSheet, TouchableOpacity,
-  View
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { colors, windowWidth } from "../../assets/colors";
@@ -15,9 +18,10 @@ import {
   fixPhoneVec,
   LocationIcon,
   PhoneIcon,
-  PhoneIconVec,
+  Phonefix,
   WorldIcon,
-  WtspIcon
+  WtspIcon,
+  Phonemobileanim,
 } from "../../assets/IconFactory";
 import { UserContext } from "../../tools/Context";
 import MenuButton from "../../tools/MenuButton";
@@ -114,109 +118,209 @@ const CallBtns = ({ navigation }) => {
 const ContactCard = ({ navigation }) => {
   const { IsLogged } = useContext(UserContext);
   return (
-    <View style={styles.contactContenct}>
-      {/* <Text style={styles.companyName}>KAL & ROK GmbH</Text> */}
-     
-   
-      <TouchableOpacity
-        onPress={() => Linking.openURL(`tel:+491628020283`)}
-        style={styles.copyButton}
-      >
-              <Animatable.View animation="swing" iterationCount={"infinite"}>
+    <>
+      <View
+        style={{ backgroundColor: colors.secondary, height: 1, width: "85%" }}
+      />
+      <View style={styles.contactContenct}>
+        {/* <Text style={styles.companyName}>KAL & ROK GmbH</Text> */}
 
-        <View style={styles.IconHolder}>
-          <Image
-            source={PhoneIconVec}
-            style={{ width: "100%", height: 90 }}
-            resizeMode="contain"
-          />
-        </View>
-      </Animatable.View>
-
-        {/* <View style={styles.iconContainer}>
-
-          <Text style={styles.email}>0162 / 8020283</Text>
-        </View> */}
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => Linking.openURL(`tel:+4991125391310`)}
-        style={styles.copyButton}
-      >
-      <Animatable.View animation="swing" iterationCount={"infinite"}>
-        <View style={styles.IconHolder}>
-          <Image
-            source={fixPhoneVec}
-            style={{ width: "100%", height: 90 }}
-            resizeMode="contain"
-          />
-        </View>
-        {/* <View style={styles.iconContainer}>
-          <Text style={styles.email}>0911 / 25391310</Text>
-        </View> */}
-      </Animatable.View>
-      </TouchableOpacity>
-      {IsLogged.isLogged && (
         <TouchableOpacity
-          onPress={() => navigation.navigate("Chat")}
+          onPress={() => Linking.openURL(`tel:+491628020283`)}
           style={styles.copyButton}
+          activeOpacity={0.9}
         >
-          <View style={styles.IconHolder}>
+          <View
+            style={{
+              alignSelf: "center",
+              width: 90,
+              height: 90,
+              backgroundColor: colors.bg,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              marginBottom: 20,
+              elevation: 5,
+              borderRadius: 12,
+            }}
+          >
+            <LottieView
+              source={Phonemobileanim}
+              speed={1}
+              resizeMode="contain"
+              autoPlay={true}
+              loop={true}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => Linking.openURL(`tel:+4991125391310`)}
+          style={styles.copyButton}
+          activeOpacity={0.9}
+        >
+          <View
+            style={{
+              alignSelf: "center",
+              width: 90,
+              height: 90,
+              backgroundColor: colors.bg,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 5,
+              borderRadius: 12,
+            }}
+          >
+            <LottieView
+              source={Phonefix}
+              speed={1}
+              resizeMode="contain"
+              autoPlay={true}
+              loop={true}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </View>
+        </TouchableOpacity>
+        {IsLogged.isLogged && (
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => navigation.navigate("Chat")}
+            style={styles.copyButton}
+          >
+            <View
+              style={{
+                alignSelf: "center",
+                width: 90,
+                height: 90,
+                backgroundColor: colors.bg,
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 5,
+                borderRadius: 12,
+              }}
+            >
+              <Image
+                source={ChatNow}
+                style={{ width: "100%", height: 90 }}
+                resizeMode="contain"
+              />
+            </View>
+            {/* <View style={styles.iconContainer}>
+            <Text style={styles.email}>www.kal-rok.de</Text>
+          </View> */}
+          </TouchableOpacity>
+        )}
+        <TouchableOpacity
+          onPress={() =>
+            Linking.openURL(`https://goo.gl/maps/5btLRM83qp9XH5dy8`)
+          }
+          style={styles.copyButton}
+          activeOpacity={0.9}
+        >
+          <View
+            style={{
+              alignSelf: "center",
+              width: 90,
+              height: 90,
+              backgroundColor: colors.bg,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 5,
+              borderRadius: 12,
+            }}
+          >
             <Image
-              source={ChatNow}
+              source={LocationIcon}
+              style={{ width: "100%", height: 90 }}
+              resizeMode="contain"
+            />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => Linking.openURL(`mailto:info@kal-rok.de`)}
+          style={styles.copyButton}
+          activeOpacity={0.9}
+        >
+          <View
+            style={{
+              alignSelf: "center",
+              width: 90,
+              height: 90,
+              backgroundColor: colors.bg,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 5,
+              borderRadius: 12,
+            }}
+          >
+            <Image
+              source={EmailIcon}
               style={{ width: "100%", height: 90 }}
               resizeMode="contain"
             />
           </View>
           {/* <View style={styles.iconContainer}>
-            <Text style={styles.email}>www.kal-rok.de</Text>
-          </View> */}
-        </TouchableOpacity>
-      )}
-          <TouchableOpacity
-            onPress={() => Linking.openURL(`https://goo.gl/maps/5btLRM83qp9XH5dy8`)}
-            style={styles.copyButton}
-          >
-            <View style={styles.IconHolder}>
-              <Image
-                source={LocationIcon}
-                style={{ width: "100%", height: 90 }}
-                resizeMode="contain"
-              />
-            </View>
-    
-          </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => Linking.openURL(`mailto:info@kal-rok.de`)}
-        style={styles.copyButton}
-      >
-        <View style={styles.IconHolder}>
-          <Image
-            source={EmailIcon}
-            style={{ width: "100%", height: 90 }}
-            resizeMode="contain"
-          />
-        </View>
-        {/* <View style={styles.iconContainer}>
           <Text style={styles.email}>info@kal-rok.de</Text>
         </View> */}
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.copyButton}
-        onPress={() => Linking.openURL("https://www.kal-rok.de")}
-      >
-        <View style={styles.IconHolder}>
-          <Image
-            source={WorldIcon}
-            style={{ width: "100%", height: 90 }}
-            resizeMode="contain"
-          />
-        </View>
-        {/* <View style={styles.iconContainer}>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.9}
+          style={styles.copyButton}
+          onPress={() => Linking.openURL("https://www.kal-rok.de")}
+        >
+          <View
+            style={{
+              alignSelf: "center",
+              width: 90,
+              height: 90,
+              backgroundColor: colors.bg,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 5,
+              borderRadius: 12,
+            }}
+          >
+            <Image
+              source={WorldIcon}
+              style={{ width: "100%", height: 90 }}
+              resizeMode="contain"
+            />
+          </View>
+          {/* <View style={styles.iconContainer}>
           <Text style={styles.email}>www.kal-rok.de</Text>
         </View> */}
-      </TouchableOpacity>
-      
-    </View>
+        </TouchableOpacity>
+      </View>
+    </>
   );
 };
 
@@ -232,6 +336,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     margin: 5,
     backgroundColor: colors.bg,
+    paddingTop: 20,
   },
   copyButton: {
     // marginVertical: 5,

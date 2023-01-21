@@ -1,4 +1,4 @@
-import { Entypo } from "@expo/vector-icons";
+import { AntDesign, Entypo } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
 import LottieView from "lottie-react-native";
 import moment from "moment";
@@ -218,6 +218,11 @@ const ApModal = ({ apModalStatus, CloseModal }) => {
             elevation: 14,
           }}
         >
+          <View style={{justifyContent:'flex-end', flexDirection:'row'}}>
+          <TouchableOpacity onPress={CloseModal}>
+            <AntDesign name="close" size={25} color={colors.secondary} />
+          </TouchableOpacity>
+          </View>
           <View style={{ alignItems: "center" }}>
             <LottieView
               source={apModalStatus.icon}
@@ -233,7 +238,7 @@ const ApModal = ({ apModalStatus, CloseModal }) => {
               fontSize: 18,
               paddingVertical: 20,
               color: colors.text,
-              textAlign:"center"
+              textAlign: "center",
             }}
           >
             {apModalStatus.isCalander
@@ -249,19 +254,24 @@ const ApModal = ({ apModalStatus, CloseModal }) => {
           >
             {apModalStatus.value}
           </Text>
-          <View style={{ borderTopWidth: 1, borderColor: colors.primary ,	marginTop: 25,
-								paddingTop: 15,}}>
-						<Text
-							style={{
-								fontFamily: "Inter_400Regular",
-								fontSize: 14,
-								color: colors.text,
-							
-							}}
-						>
-            {`Mit besten Grüßen aus Nürnberg\nIhr KAL&ROK Team\nAbdelhafid El K.`}
-          </Text>
-        </View>
+          <View
+            style={{
+              borderTopWidth: 1,
+              borderColor: colors.primary,
+              marginTop: 25,
+              paddingTop: 15,
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: "Inter_400Regular",
+                fontSize: 14,
+                color: colors.text,
+              }}
+            >
+              {`Mit besten Grüßen aus Nürnberg\nIhr KAL&ROK Team\nAbdelhafid El K.`}
+            </Text>
+          </View>
         </View>
       </TouchableOpacity>
     </Modal>
