@@ -112,7 +112,7 @@ const ImgsButns = ({ img, gindex, navigation }) => {
             ) : (
               <Image
                 source={{ uri: `${url}${img.media[0].src}` }}
-                resizeMode="contain"
+                resizeMode="stretch"
                 style={styles.imgbtn}
               />
             )}

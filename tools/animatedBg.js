@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     width: windowWidth,
     height: windowHeight,
     zIndex: -1,
-    opacity:.5
+    opacity:1
   },
   image: {
     width: windowWidth,

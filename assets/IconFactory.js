@@ -147,6 +147,13 @@ export const calander = require("./animations/calander.json");
 export const boxes = require("./animations/boxes.json");
 export const Phonefix = require("./animations/Phonefix.json");
 export const Phonemobileanim = require("./animations/Phonemobileanim.json");
+export const ChatAnimation = require("./animations/3_Chat.json");
+export const LocalisationAnim = require("./animations/4_Localisation.json");
+export const MailAnim = require("./animations/5_Mail.json");
+export const WebAnim = require("./animations/6_Web.json");
+export const instagramAnim = require("./animations/7_instagram.json");
+export const facebookAnim = require("./animations/8_facebook.json");
+export const tiktokAnim = require("./animations/9_tiktok.json");
 
 //steps
 export const step1Png = require("./imgs/steps/step1.png");

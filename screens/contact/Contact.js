@@ -12,19 +12,22 @@ import * as Animatable from "react-native-animatable";
 import { colors, windowWidth } from "../../assets/colors";
 import {
   ChatNow,
+  facebookAnim,
   contactusAnim,
-  EmailIcon,
+  ChatAnimation,
   fixPhone,
-  fixPhoneVec,
-  LocationIcon,
+  LocalisationAnim,
+  WebAnim,
   PhoneIcon,
   Phonefix,
-  WorldIcon,
-  WtspIcon,
+  MailAnim,
+  instagramAnim,
+  tiktokAnim,
   Phonemobileanim,
 } from "../../assets/IconFactory";
 import { UserContext } from "../../tools/Context";
 import MenuButton from "../../tools/MenuButton";
+import { Text } from "react-native";
 
 export default function Contact({ navigation }) {
   return (
@@ -115,18 +118,20 @@ const CallBtns = ({ navigation }) => {
     </View>
   );
 };
+const Phonenumberfix = "+491628020283"
+const PhonenumberMobile = "+4991125391310"
 const ContactCard = ({ navigation }) => {
   const { IsLogged } = useContext(UserContext);
   return (
-    <>
+    <View style={{position:'relative'}}>
       <View
-        style={{ backgroundColor: colors.secondary, height: 1, width: "85%" }}
+        style={{ backgroundColor: colors.primary, height: 1, width: "100%", position: "absolute", top: "-15%", zIndex: 9999 }}
       />
       <View style={styles.contactContenct}>
         {/* <Text style={styles.companyName}>KAL & ROK GmbH</Text> */}
 
         <TouchableOpacity
-          onPress={() => Linking.openURL(`tel:+491628020283`)}
+          onPress={() => Linking.openURL(`tel:${Phonenumberfix}`)}
           style={styles.copyButton}
           activeOpacity={0.9}
         >
@@ -150,7 +155,7 @@ const ContactCard = ({ navigation }) => {
           >
             <LottieView
               source={Phonemobileanim}
-              speed={1}
+              speed={.6}
               resizeMode="contain"
               autoPlay={true}
               loop={true}
@@ -159,7 +164,7 @@ const ContactCard = ({ navigation }) => {
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => Linking.openURL(`tel:+4991125391310`)}
+          onPress={() => Linking.openURL(`tel:${PhonenumberMobile}`)}
           style={styles.copyButton}
           activeOpacity={0.9}
         >
@@ -182,7 +187,7 @@ const ContactCard = ({ navigation }) => {
           >
             <LottieView
               source={Phonefix}
-              speed={1}
+              speed={.6}
               resizeMode="contain"
               autoPlay={true}
               loop={true}
@@ -196,32 +201,32 @@ const ContactCard = ({ navigation }) => {
             onPress={() => navigation.navigate("Chat")}
             style={styles.copyButton}
           >
-            <View
-              style={{
-                alignSelf: "center",
-                width: 90,
-                height: 90,
-                backgroundColor: colors.bg,
-                shadowColor: "#000",
-                shadowOffset: {
-                  width: 0,
-                  height: 2,
-                },
-                shadowOpacity: 0.25,
-                shadowRadius: 3.84,
-                elevation: 5,
-                borderRadius: 12,
-              }}
-            >
-              <Image
-                source={ChatNow}
-                style={{ width: "100%", height: 90 }}
-                resizeMode="contain"
-              />
-            </View>
-            {/* <View style={styles.iconContainer}>
-            <Text style={styles.email}>www.kal-rok.de</Text>
-          </View> */}
+                   <View
+            style={{
+              alignSelf: "center",
+              width: 90,
+              height: 90,
+              backgroundColor: colors.bg,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 5,
+              borderRadius: 12,
+            }}
+          >
+            <LottieView
+              source={ChatAnimation}
+              speed={.6}
+              resizeMode="contain"
+              autoPlay={true}
+              loop={true}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </View>
           </TouchableOpacity>
         )}
         <TouchableOpacity
@@ -231,7 +236,7 @@ const ContactCard = ({ navigation }) => {
           style={styles.copyButton}
           activeOpacity={0.9}
         >
-          <View
+                <View
             style={{
               alignSelf: "center",
               width: 90,
@@ -248,10 +253,13 @@ const ContactCard = ({ navigation }) => {
               borderRadius: 12,
             }}
           >
-            <Image
-              source={LocationIcon}
-              style={{ width: "100%", height: 90 }}
+            <LottieView
+              source={LocalisationAnim}
+              speed={.6}
               resizeMode="contain"
+              autoPlay={true}
+              loop={true}
+              style={{ width: "100%", height: "100%" }}
             />
           </View>
         </TouchableOpacity>
@@ -260,7 +268,7 @@ const ContactCard = ({ navigation }) => {
           style={styles.copyButton}
           activeOpacity={0.9}
         >
-          <View
+                <View
             style={{
               alignSelf: "center",
               width: 90,
@@ -277,22 +285,22 @@ const ContactCard = ({ navigation }) => {
               borderRadius: 12,
             }}
           >
-            <Image
-              source={EmailIcon}
-              style={{ width: "100%", height: 90 }}
+            <LottieView
+              source={MailAnim}
+              speed={.6}
               resizeMode="contain"
+              autoPlay={true}
+              loop={true}
+              style={{ width: "100%", height: "100%" }}
             />
           </View>
-          {/* <View style={styles.iconContainer}>
-          <Text style={styles.email}>info@kal-rok.de</Text>
-        </View> */}
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.9}
           style={styles.copyButton}
           onPress={() => Linking.openURL("https://www.kal-rok.de")}
         >
-          <View
+                 <View
             style={{
               alignSelf: "center",
               width: 90,
@@ -309,18 +317,114 @@ const ContactCard = ({ navigation }) => {
               borderRadius: 12,
             }}
           >
-            <Image
-              source={WorldIcon}
-              style={{ width: "100%", height: 90 }}
+            <LottieView
+              source={WebAnim}
+              speed={.6}
               resizeMode="contain"
+              autoPlay={true}
+              loop={true}
+              style={{ width: "100%", height: "100%" }}
             />
           </View>
-          {/* <View style={styles.iconContainer}>
-          <Text style={styles.email}>www.kal-rok.de</Text>
-        </View> */}
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.9}
+          style={{...styles.copyButton, marginTop: 20}}
+          onPress={() => Linking.openURL("https://instagram.com/kalrokgmbh?igshid=YmMyMTA2M2Y=")}
+        >
+                 <View
+            style={{
+              alignSelf: "center",
+              width: 90,
+              height: 90,
+              backgroundColor: colors.bg,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 5,
+              borderRadius: 12,
+            }}
+          >
+            <LottieView
+              source={instagramAnim}
+              speed={.6}
+              resizeMode="contain"
+              autoPlay={true}
+              loop={true}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.9}
+          style={{...styles.copyButton, marginTop: 20}}
+          onPress={() => Linking.openURL("https://www.facebook.com/KalRok-GmbH-109972234661965/")}
+        >
+                 <View
+            style={{
+              alignSelf: "center",
+              width: 90,
+              height: 90,
+              backgroundColor: colors.bg,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 5,
+              borderRadius: 12,
+            }}
+          >
+            <LottieView
+              source={facebookAnim}
+              speed={.6}
+              resizeMode="contain"
+              autoPlay={true}
+              loop={true}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.9}
+          style={{...styles.copyButton, marginTop: 20}}
+          onPress={() => Linking.openURL("https://www.tiktok.com/@rokk4197ihe?_t=8ZIpBHe3Wrd&_r=1")}
+        >
+                 <View
+            style={{
+              alignSelf: "center",
+              width: 90,
+              height: 90,
+              backgroundColor: colors.bg,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 5,
+              borderRadius: 12,
+            }}
+          >
+            <LottieView
+              source={tiktokAnim}
+              speed={.6}
+              resizeMode="contain"
+              autoPlay={true}
+              loop={true}
+              style={{ width: "100%", height: "100%" }}
+            />
+          </View>
         </TouchableOpacity>
       </View>
-    </>
+    </View>
   );
 };
 
