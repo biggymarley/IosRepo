@@ -137,7 +137,7 @@ export default function Home({ navigation }) {
             <NotLoggedContent navigation={navigation} />
             ) : null}
          
-          {/* <BackgroundAnimation /> */}
+          <BackgroundAnimation />
           {IsLogged.isLogged ?<>
             <View style={{height: 60}} />
             <CustomFooter navigation={navigation} IsLogged={IsLogged}/>
