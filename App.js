@@ -49,7 +49,6 @@ import axios, { AuthUrl, BaseURL, MEurl, UpdateUserValues } from "./tools/Apis";
 import { UserProvider } from "./tools/Context";
 import CostumDrawer from "./tools/CostumDrawer";
 import Loading from "./tools/Loading";
-import CustomFooter from "./tools/CustomFooter/CustomFooter";
 // import { createNavigationContainerRef } from '@react-navigation/native';
 const Drawer = createDrawerNavigator();
 const navigationRef = createNavigationContainerRef();

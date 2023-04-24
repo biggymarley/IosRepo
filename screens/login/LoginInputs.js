@@ -37,7 +37,6 @@ const LoginInputs = ({
 
   const [visible, setvisible] = useState(false);
   const [loading, setloading] = useState(false);
-  const ref = useRef({});
   const log = async () => {
     try {
       const value = await AsyncStorage.getItem("SavedData");
