@@ -34,7 +34,10 @@ export default function TrackingStack({ navigation }) {
           Authorization: `Bearer ${IsLogged.token}`,
         },
       });
-      const command = res.data.data.filter((e) => e.history === false)[0] ?? {};
+      let command = res.data.data.filter((e) => e.history === false)[0] ?? {};
+      console.log(command)
+      if(command?.commandMode !== "tracking")
+        command = {...command, tripId: {...command.tripId, status: 0}}
       setstatus({ ...command });
       setisLoading(false);
     } catch (error) {

@@ -69,7 +69,7 @@ const ImgsPreview = ({ img, type, gindex, navigation }) => {
             onPlaybackStatusUpdate={(status) => checkIfFinished(status)}
           />
         ) : (
-          <Image source={{ uri: `${url}${img}` }} resizeMode="contain" style={styles.imgbtn} />
+          <Image source={{ uri: `${url}${img}` }} resizeMode="stretch" style={styles.imgbtn} />
         )}
       </View>
     </>

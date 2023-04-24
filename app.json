@@ -2,7 +2,7 @@
   "expo": {
     "name": "KAL&ROK",
     "slug": "KAL-ROK-GmbH",
-    "version": "66",
+    "version": "72",
     "orientation": "portrait",
     "icon": "./assets/imgs/icon1.png",
     "splash": {
@@ -44,7 +44,7 @@
         "CAMERA_ROLL",
         "AUDIO"
       ],
-      "versionCode": 66,
+      "versionCode": 72,
       "adaptiveIcon": {
         "foregroundImage": "./assets/imgs/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

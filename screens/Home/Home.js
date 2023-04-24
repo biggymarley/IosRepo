@@ -7,6 +7,7 @@ import {
   Share,
   StyleSheet,
   Text,
+  Modal,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -45,6 +46,7 @@ import { HomeTourProvider, UserContext } from "../../tools/Context";
 import { Header } from "../../tools/MenuButton";
 import Rules from "./Rules";
 import TourInfos from "./TourInfos";
+import CustomFooter from "../../tools/CustomFooter/CustomFooter";
 export default function Home({ navigation }) {
   const [TourData, setTourData] = useState({ cities: [] });
   const [isLoading, setisLoading] = useState(false);
@@ -128,13 +130,19 @@ export default function Home({ navigation }) {
             {IsLogged.isLogged ? <TourInfos navigation={navigation} /> : null}
             {!IsLogged.isLogged ? (
               <CallCompany navigation={navigation} />
-            ) : null}
+              ) : null}
             {IsLogged.isLogged ? <HomeMenu navigation={navigation} /> : null}
           </ScrollView>
           {!IsLogged.isLogged ? (
             <NotLoggedContent navigation={navigation} />
-          ) : null}
-          <BackgroundAnimation />
+            ) : null}
+         
+          {/* <BackgroundAnimation /> */}
+          {IsLogged.isLogged ?<>
+            <View style={{height: 60}} />
+            <CustomFooter navigation={navigation} IsLogged={IsLogged}/>
+          </>
+             : null}
         </View>
       )}
     </HomeTourProvider>
@@ -213,6 +221,15 @@ const HomeMenu = (props) => {
     }, [])
   );
   return (
+    <Modal
+    animationType="slide"
+    transparent={true}
+    visible={modalVisible}
+    onRequestClose={() => {
+      setModalVisible(false);
+    }}
+  >
+    <View style={styles.centeredView}>
     <Animatable.View ref={ref} useNativeDriver={true}>
       <View style={styles.gridItems}>
         {buttons.map((item, index) => (
@@ -220,6 +237,8 @@ const HomeMenu = (props) => {
         ))}
       </View>
     </Animatable.View>
+    </View>
+    </Modal>
   );
 };
 

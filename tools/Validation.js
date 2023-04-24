@@ -19,10 +19,17 @@ export const PersonalValidation = yup.object().shape({
     .test("len", "Must be exactly 5 characters", (val) => val?.length === 5),
   adress: yup.string().required().max(50).min(4),
   gender: yup.string().required(),
-  phone: yup.string().required().min(8),
+  phone: yup.string().required().min(8).matches(
+    /^[\+|(0)]?49[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,7}$/m,
+    "Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character"
+  ),
   password: yup
     .string()
     .min(6, ({ min }) => `Password must be at least ${min} characters`)
+    .matches(
+      /^(?=(.[a-z]){1,})(?=(.[A-Z]){1,})(?=(.[0-9]){1,})(?=(.[!@#$%^&*()\/\-__+.]){1,}).{8,}$/,
+      "Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character"
+    )
     .required("Password is required"),
 });
 
